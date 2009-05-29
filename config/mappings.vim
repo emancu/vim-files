@@ -32,8 +32,6 @@ map ' `
 " Mimic command line editing
 map <C-K> <ESC>d$
 map <C-U> <ESC>d0
-map <C-A> <ESC>0
-map <C-E> <ESC>$
 imap <C-A> <ESC>0i
 imap <C-E> <ESC>$a
 
