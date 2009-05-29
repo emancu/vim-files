@@ -87,7 +87,9 @@ else
     highlight Type ctermfg=White
     highlight rubySymbol ctermfg=66
     highlight Identifier ctermfg=White
+    highlight rubyClassVariable ctermfg=66
     highlight rubyStringDelimiter ctermfg=DarkGreen
+    highlight rubyInstanceVariable ctermfg=66
     highlight rubyInterpolation ctermfg=White
     highlight rubyPseudoVariable ctermfg=66
     highlight Constant ctermfg=228
@@ -96,4 +98,5 @@ else
     highlight Statement ctermfg=DarkRed
     highlight String ctermfg=DarkGreen
     highlight Search ctermbg=White
+    highlight Todo ctermbg=DarkGray
 endif
