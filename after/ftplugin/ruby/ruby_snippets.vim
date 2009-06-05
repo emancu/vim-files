@@ -46,11 +46,6 @@ call IMAP('ri-', 'remove_index :<++>, <++>', 'ruby')
 " Rails > Validations
 call IMAP('vu-', "validates_uniqueness_of :<++>", 'ruby')
 
-" Rails > Relationships
-call IMAP('bt-', "belongs_to :<++>", 'ruby')
-call IMAP('ho-', "has_one :<++>", 'ruby')
-call IMAP('hm-', "has_many :<++>", 'ruby')
-
 " Rails > Navigation
 call IMAP('redi-', "redirect_to(<++>)", 'ruby')
 

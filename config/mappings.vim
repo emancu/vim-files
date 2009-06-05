@@ -59,6 +59,10 @@ imap <2-MiddleMouse> <Nop>
 " Deactivate recording
 map q <Nop>
 
+" Deactivate keyword lookup
+map K <Nop>
+
+
 " After a repeat operation, go back to the first character of the previously changed or yanked text
 nmap . .`[
 
