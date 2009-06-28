@@ -89,18 +89,13 @@ imap <C-K> <ESC>O
 imap <C-L> <ESC>la
 imap <C-H> <ESC>ha
 
-" Substitute last search in the current buffer
-imap <C-B> <ESC>:%s//
-nmap <C-B> :%s//
-
 " Open file in new tab
 nmap <C-O> :tabe 
 
 " Comment/uncomment with #
-nmap <F12> <ESC>:s/\v^(\s*)([^# ])/\1# \2/<CR>:set nohlsearch<CR>
-nmap <S-F12> <ESC>:s/\v^(\s*)# ([^#])/\1\2/<CR>:set nohlsearch<CR>
 vmap <F12> :s/\v^(\s*)([^# ])/\1# \2/<CR>:set nohlsearch<CR>
 vmap <S-F12> :s/\v^(\s*)# ([^#])/\1\2/<CR>:set nohlsearch<CR>
+vmap # :s/\v^(\s*)# ([^#])/\1\2/<CR>:set nohlsearch<CR>
 
 " Command+Space as Escape
 imap <C-Space> <ESC>

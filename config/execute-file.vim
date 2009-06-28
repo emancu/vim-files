@@ -3,7 +3,7 @@ function! ExecuteFile()
   let file = expand("%")
 
   if stridx(file, "ruby.rb") != -1
-    call PreviewResults("ruby " . file)
+    call PreviewResults("ruby -rubygems " . file)
   elseif stridx(file, ".mo") != -1
     call PreviewResults("mo " . file)
   elseif stridx(file, ".io") != -1
@@ -11,7 +11,7 @@ function! ExecuteFile()
   elseif stridx(file, ".ml") != -1
     call PreviewResults("ocaml " . file)
   elseif stridx(file, "_test.rb") != -1
-    call PreviewResults("env NOCOLOR=1 ruby " . file)
+    execute "!env NOCOLOR=1 ruby " . file
   elseif stridx(file, ".rb") != -1
     execute "!ruby -c %"
   elseif stridx(file, ".lua") != -1

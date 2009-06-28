@@ -99,4 +99,5 @@ else
     highlight String ctermfg=DarkGreen
     highlight Search ctermbg=White
     highlight Todo ctermbg=DarkGray
+    highlight ModeMsg ctermfg=white ctermbg=DarkGreen
 endif

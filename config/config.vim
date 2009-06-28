@@ -1,7 +1,7 @@
 " Basic settings
 syntax on
 filetype on
-filetype indent off
+filetype indent on
 filetype plugin on
 
 " Change default mapleader to a comma
@@ -45,6 +45,7 @@ endif
 " Case insensitive, incremental search, manual folds, etc.
 set nocompatible
 set autoindent
+set smartindent
 set iminsert=0
 set gdefault
 set ignorecase
