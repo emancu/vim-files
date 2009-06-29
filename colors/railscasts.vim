@@ -98,6 +98,6 @@ else
     highlight Statement ctermfg=DarkRed
     highlight String ctermfg=DarkGreen
     highlight Search ctermbg=White
-    highlight Todo ctermbg=DarkGray
+    highlight Todo ctermbg=Black ctermfg=Yellow
     highlight ModeMsg ctermfg=white ctermbg=DarkGreen
 endif
