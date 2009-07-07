@@ -100,4 +100,5 @@ else
     highlight Search ctermbg=White
     highlight Todo ctermbg=Black ctermfg=Yellow
     highlight ModeMsg ctermfg=white ctermbg=DarkGreen
+    highlight NonText ctermfg=DarkGray ctermbg=Black
 endif

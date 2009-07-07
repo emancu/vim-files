@@ -9,7 +9,7 @@ map <F2> :source %<CR>
 map <S-F2> :tabnew $HOME/.gvimrc<CR>:tabm 0<CR>
 
 " Open tasks
-map <F3> :tabnew $HOME/Documents/Notes/tasks.taskpaper<CR>:tabm 0<CR>
+map <F3> :tabnew $HOME/.taskpaper<CR>:tabm 0<CR>
 
 " Format selection with par
 vmap <F8> :!par<CR>
@@ -19,8 +19,8 @@ map <F10> :set hlsearch!<CR>
 imap <F10> <ESC>:set hlsearch!<CR>a
 
 " Handle trailing whitespaces
-map <F11> <ESC>:set list!<CR>
-map <S-F11> <ESC>:%s/\s*$//g<CR>
+" map <F11> <ESC>:set list!<CR>
+map <F11> <ESC>:%s/\s*$//g<CR>
 
 " Open file under the cursor in new tab
 map gf :tabe! <cfile><CR>
@@ -39,17 +39,6 @@ imap <C-E> <ESC>$a
 map <C-H> :tabp<CR>
 map <C-L> :tabn<CR>
 
-" Go to tabs by number
-map <D-1> <ESC>:tabn1<CR>
-map <D-2> <ESC>:tabn2<CR>
-map <D-3> <ESC>:tabn3<CR>
-map <D-4> <ESC>:tabn4<CR>
-map <D-5> <ESC>:tabn5<CR>
-map <D-6> <ESC>:tabn6<CR>
-map <D-7> <ESC>:tabn7<CR>
-map <D-8> <ESC>:tabn8<CR>
-map <D-9> <ESC>:tabn9<CR>
-
 " Deactivate middle click
 map <MiddleMouse> <Nop>
 map <2-MiddleMouse> <Nop>
@@ -62,7 +51,6 @@ map q <Nop>
 " Deactivate keyword lookup
 map K <Nop>
 
-
 " After a repeat operation, go back to the first character of the previously changed or yanked text
 nmap . .`[
 
@@ -70,10 +58,6 @@ nmap . .`[
 nmap j gj
 nmap k gk
 nmap gm g$
-
-" Close tabs and save the files
-map <F4> <ESC>:w!<CR>:bw<CR>
-map <S-F4> <ESC>:bw!<CR>
 
 " Execute files with Ruby 1.9
 map <F6> <ESC>:w!<CR>:!ruby1.9 %<CR>
@@ -92,16 +76,5 @@ imap <C-H> <ESC>ha
 " Open file in new tab
 nmap <C-O> :tabe 
 
-" Comment/uncomment with #
-vmap <F12> :s/\v^(\s*)([^# ])/\1# \2/<CR>:set nohlsearch<CR>
-vmap <S-F12> :s/\v^(\s*)# ([^#])/\1\2/<CR>:set nohlsearch<CR>
-vmap # :s/\v^(\s*)# ([^#])/\1\2/<CR>:set nohlsearch<CR>
-
-" Command+Space as Escape
-imap <C-Space> <ESC>
-
 " Run git blame in the current file and display results in the preview window.
 map <C-G> :call PreviewResults("git blame " . expand("%"))<CR>
-
-" Run tests and display results in the preview window.
-map <C-T> :call PreviewResults("testrb " . expand("%") . " -n " . expand("<cword>"))<CR>

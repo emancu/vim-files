@@ -11,7 +11,7 @@ function! ExecuteFile()
   elseif stridx(file, ".ml") != -1
     call PreviewResults("ocaml " . file)
   elseif stridx(file, "_test.rb") != -1
-    execute "!env NOCOLOR=1 ruby " . file
+    execute "!env ruby " . file
   elseif stridx(file, ".rb") != -1
     execute "!ruby -c %"
   elseif stridx(file, ".lua") != -1

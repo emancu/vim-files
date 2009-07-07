@@ -56,6 +56,7 @@ set incsearch
 set nohlsearch
 
 source ~/.vim/config/mappings.vim
+source ~/.vim/config/commenter.vim
 source ~/.vim/config/execute-file.vim
 source ~/.vim/config/tab-autocomplete.vim
 source ~/.vim/config/imap-snippets.vim
