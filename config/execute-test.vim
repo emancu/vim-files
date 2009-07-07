@@ -1,5 +1,5 @@
 " Execute Ruby tests or a particular scenarios.
-" If the cursos is on a line that contains an scenario declaration,
+" If the cursor is on a line that contains an scenario declaration,
 " only that scenario is run.
 function! ExecuteTest()
   let s:file = expand("%")
