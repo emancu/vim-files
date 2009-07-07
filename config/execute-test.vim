@@ -5,9 +5,9 @@ function! ExecuteTest()
   let s:file = expand("%")
   let s:line = getline(".")
 
-  if match(s:line, '^\s*scenario ') != -1
-    let s:name = tr(substitute(s:line, '\s*scenario "\(.*\)" do\s*', "\\1", ""), ' ', '_')
-    execute "!env ruby " . s:file . " -n '/" . s:name . "/'"
+  if match(s:line, '^\s*\(scenario\|test\|should\) ') != -1
+    let s:name = substitute(s:line, '^.* "\(.*\)" do\s*', "\\1", "")
+    execute "!env ruby " . s:file . " -n '/" . tr(s:name, ' ', '_') . "/'"
   else
     execute "!env ruby " . s:file
   end
