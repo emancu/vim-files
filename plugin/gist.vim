@@ -1,8 +1,8 @@
 "=============================================================================
 " File: gist.vim
 " Author: Yasuhiro Matsumoto <mattn.jp@gmail.com>
-" Last Change: 23-Feb-2009. Jan 2008
-" Version: 2.1
+" Last Change: 03-Jul-2009.
+" Version: 2.7
 " WebPage: http://github.com/mattn/gist-vim/tree/master
 " Usage:
 "
@@ -20,6 +20,7 @@
 "
 "   :Gist -e
 "     edit the gist. (shoud be work on gist buffer)
+"     you can update the gist with :w command on gist buffer.
 "
 "   :Gist -e foo.js
 "     edit the gist with name 'foo.js'. (shoud be work on gist buffer)
@@ -152,7 +153,16 @@ function! s:GistList(user, token, gistls)
   else
     let url = 'http://gist.github.com/'.a:gistls
   endif
-  exec 'silent split gist:'.a:gistls
+  let winnum = bufwinnr(bufnr('gist:'.a:gistls))
+  if winnum != -1
+    if winnum != bufwinnr('%')
+      exe "normal \<c-w>".winnum."w"
+    endif
+    setlocal modifiable
+    silent %d _
+  else
+    exec 'silent split gist:'.a:gistls
+  endif
   exec 'silent 0r! curl -s '.url
   silent! %s/>/>\r/g
   silent! %s/</\r</g
@@ -171,8 +181,10 @@ function! s:GistList(user, token, gistls)
   silent! %s/&gt;/>/g
   silent! %s/&lt;/</g
   silent! %s/&#\(\d\d\);/\=nr2char(submatch(1))/g
+  silent! %g/^gist: /s/ //g
+  setlocal buftype=nofile bufhidden=hide noswapfile 
   setlocal nomodified
-  syntax match SpecialKey /^gist: /he=e-2
+  syntax match SpecialKey /^gist:/he=e-1
   exec 'nnoremap <silent> <buffer> <cr> :call <SID>GistListAction()<cr>'
   normal! gg
 endfunction
@@ -200,12 +212,30 @@ function! s:GistDetectFiletype(gistid)
   endif
 endfunction
 
+function! s:GistWrite(fname)
+  if a:fname == expand("%:p")
+    Gist -e
+  else
+    exe "w".(v:cmdbang ? "!" : "")." ".fnameescape(v:cmdarg)." ".fnameescape(a:fname)
+  endif
+endfunction
+
 function! s:GistGet(user, token, gistid, clipboard)
   let url = 'http://gist.github.com/'.a:gistid.'.txt'
-  exec 'silent split gist:'.a:gistid
+  let winnum = bufwinnr(bufnr('gist:'.a:gistid))
+  if winnum != -1
+    if winnum != bufwinnr('%')
+      exe "normal \<c-w>".winnum."w"
+    endif
+    setlocal modifiable
+    silent %d _
+  else
+    exec 'silent split gist:'.a:gistid
+  endif
   filetype detect
   exec '%d _'
   exec 'silent 0r! curl -s '.url
+  setlocal buftype=acwrite bufhidden=delete noswapfile 
   setlocal nomodified
   doau StdinReadPost <buffer>
   normal! gg
@@ -219,11 +249,12 @@ function! s:GistGet(user, token, gistid, clipboard)
       normal! ggVG"+y
     endif
   endif
+  au BufWriteCmd <buffer> call s:GistWrite(expand("<amatch>"))
 endfunction
 
 function! s:GistListAction()
   let line = getline('.')
-  let mx = '^gist: \(\w\+\).*'
+  let mx = '^gist:\(\w\+\).*'
   if line =~# mx
     let gistid = substitute(line, mx, '\1', '')
     call s:GistGet(g:github_user, g:github_token, gistid, 0)
@@ -269,6 +300,7 @@ function! s:GistUpdate(user, token, content, gistid, gistnm)
   let res = matchstr(split(res, '\(\r\?\n\|\r\n\?\)'), '^Location: ')
   let res = substitute(res, '^.*: ', '', '')
   if len(res) > 0 && res != 'http://gist.github.com/gists' 
+    setlocal nomodified
     echo 'done: '.res
   else
     echoerr 'Edit failed'
@@ -330,6 +362,15 @@ function! Gist(line1, line2, ...)
   if !exists('g:github_token')
     let g:github_token = substitute(system('git config --global github.token'), "\n", '', '')
   endif
+  if strlen(g:github_user) == 0 || strlen(g:github_token) == 0
+    echoerr "You have no setting for github."
+    echohl WarningMsg
+    echo "git config --global github.user  your-name"
+    echo "git config --global github.token your-token"
+    echo "or set g:github_user and g:github_token in your vimrc"
+    echohl None
+    return 0
+  end
 
   let bufname = bufname("%")
   let user = g:github_user
@@ -359,7 +400,7 @@ function! Gist(line1, line2, ...)
     elseif arg =~ '^\(-e\|--edit\)$' && bufname =~ bufnamemx
       let editpost = 1
       let gistid = substitute(bufname, bufnamemx, '\1', '')
-    elseif len(gistls) > 0 && len(gistnm) == 0
+    elseif len(gistnm) == 0
       if editpost == 1
         let gistnm = arg
       elseif len(gistls) > 0
