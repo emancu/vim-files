@@ -11,6 +11,9 @@ let maplocalleader = ","
 " Folds
 set fillchars="vert:YXXY,fold:-"
 
+" Set spellcheck to English
+set spelllang=en_us
+
 " Tabs management
 set expandtab
 set shiftwidth=2

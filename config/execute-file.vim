@@ -3,7 +3,8 @@ function! ExecuteFile()
   let file = expand("%")
 
   if stridx(file, "ruby.rb") != -1
-    call PreviewResults("ruby -rubygems " . file)
+    " call PreviewResults("ruby -rubygems " . file)
+    call ExecuteTest()
   elseif stridx(file, ".mo") != -1
     call PreviewResults("mo " . file)
   elseif stridx(file, ".io") != -1
@@ -24,6 +25,8 @@ function! ExecuteFile()
     let dotfile = substitute(file, "\.dot$", ".pdf", "")
     execute "!dot -Tpdf % > " . dotfile . " && open " . dotfile
   elseif stridx(file, ".markdown") != -1
+    execute "!maruku %"
+  elseif stridx(file, ".md") != -1
     execute "!maruku %"
   elseif stridx(file, ".sass") != -1
     execute "!sass % " . substitute(file, "\.sass$", ".css", "")

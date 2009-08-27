@@ -49,7 +49,7 @@ call IMAP('redi--', "redirect_to(<++>)", 'ruby')
 
 " Quick samples
 call IMAP('array--', "[1, 2, 3, 4, 5]", 'ruby')
-call IMAP('hash--', "{ 'a' => 1, 'b' => 2, 'c' => 3 }", 'ruby')
+call IMAP('hash--', '{ "a" => 1, "b" => 2, "c" => 3 }', 'ruby')
 
 " Tests
 call IMAP('Test--', "class Test<++> < Test::Unit::TestCase\n<++>\nend", 'ruby')

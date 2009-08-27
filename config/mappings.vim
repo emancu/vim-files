@@ -5,11 +5,16 @@ map <S-F1> :tabnew $HOME/Code/Samples/mo.mo<CR>:tabm 0<CR>
 " Source current file
 map <F2> :source %<CR>
 
-" Open .vimrc in the first tab
-map <S-F2> :tabnew $HOME/.gvimrc<CR>:tabm 0<CR>
-
 " Open tasks
 map <F3> :tabnew $HOME/.taskpaper<CR>:tabm 0<CR>
+
+" Toggle spell
+map <F4> <ESC>:set spell!<CR>
+imap <F4> <ESC>:set spell!<CR>
+
+" Execute files with Ruby 1.9
+map <F6> <ESC>:w!<CR>:!ruby1.9 %<CR>
+map <S-F6> <ESC>:w!<CR>:!ruby1.9 -c %<CR>
 
 " Format selection with par
 vmap <F8> :!par<CR>
@@ -21,6 +26,10 @@ imap <F10> <ESC>:set hlsearch!<CR>a
 " Handle trailing whitespaces
 " map <F11> <ESC>:set list!<CR>
 map <F11> <ESC>:%s/\s*$//g<CR>
+
+" Start and stop the webserver
+map <Leader>start <ESC>:!thin start -R config.ru -d<CR>
+map <Leader>stop  <ESC>:!thin stop<CR>
 
 " Open file under the cursor in new tab
 map gf :tabe! <cfile><CR>
@@ -58,10 +67,6 @@ nmap . .`[
 nmap j gj
 nmap k gk
 nmap gm g$
-
-" Execute files with Ruby 1.9
-map <F6> <ESC>:w!<CR>:!ruby1.9 %<CR>
-map <S-F6> <ESC>:w!<CR>:!ruby1.9 -c %<CR>
 
 " Break the undo chain on every Space
 imap <Space> <Space><C-g>u
