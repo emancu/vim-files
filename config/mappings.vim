@@ -23,13 +23,15 @@ vmap <F8> :!par<CR>
 map <F10> :set hlsearch!<CR>
 imap <F10> <ESC>:set hlsearch!<CR>a
 
-" Handle trailing whitespaces
-" map <F11> <ESC>:set list!<CR>
-map <F11> <ESC>:%s/\s*$//g<CR>
+" Handle trailing whitespaces and tabs.
+map <F11> <ESC>:%s/\s*$//g<CR>:%s/\t/  /<CR>
 
 " Start and stop the webserver
 map <Leader>start <ESC>:!thin start -R config.ru -d<CR>
 map <Leader>stop  <ESC>:!thin stop<CR>
+
+" Add magic comment for encoding
+nmap <Leader>enc :set paste<CR>ggi# encoding: UTF-8<CR><CR><ESC>:set nopaste<CR>
 
 " Open file under the cursor in new tab
 map gf :tabe! <cfile><CR>
