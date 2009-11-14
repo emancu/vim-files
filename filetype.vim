@@ -22,6 +22,9 @@ augroup filetypedetect
   " Io programming language
   au! BufNewFile,BufRead *.io setf io
 
+  " Irssi logs
+  au BufRead,BufNewFile */irclogs*.log setf irssi
+
   " Markdown files
   au! BufNewFile,BufRead *.markdown,*.md setf markdown
 
