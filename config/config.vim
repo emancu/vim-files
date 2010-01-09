@@ -45,7 +45,7 @@ set noswapfile
 set encoding=utf-8
 set fileencoding=utf-8
 
-" Show tabs and trailing spaces (toggle with F11; remove with S-F11)
+" Show tabs and trailing spaces toggle with F11, remove with S-F11
 set listchars=tab:⏤⇢,trail:⇢
 set list
 set complete=.,w,b,u
@@ -70,7 +70,7 @@ set smartcase
 set foldmethod=manual
 set number
 set incsearch
-set nohlsearch
+set hlsearch
 
 " Other files.
 source ~/.vim/config/mappings.vim
