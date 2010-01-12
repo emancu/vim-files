@@ -3,7 +3,8 @@ map <F1> :tabnew $HOME/Code/Samples/ruby.rb<CR>:tabm 0<CR>
 map <S-F1> :tabnew $HOME/Code/Samples/mo.mo<CR>:tabm 0<CR>
 
 " Source current file
-map <F2> :source %<CR>
+map <F2> :tabnew<CR>:MRU <CR>
+map <S-F2> :MRU <CR>
 
 " Open tasks
 map <F3> :tabnew $HOME/.taskpaper<CR>:tabm 0<CR>
@@ -34,8 +35,16 @@ map <Leader>stop  <ESC>:!thin stop<CR>
 nmap <Leader>enc :set paste<CR>ggi# encoding: UTF-8<CR><CR><ESC>:set nopaste<CR>
 
 " Open file under the cursor in new tab
-map gf :tabe! <cfile><CR>
-map gF :w! /tmp/spec.results<CR><C-W>gF<CR>
+"map gf :tabe! <cfile><CR>
+"map gF :w! /tmp/spec.results<CR><C-W>gF<CR>
+
+" added by eMancu
+map <A-Left> :bN <CR>
+map <A-Right> :bn <CR>
+
+map gb :buffer 
+
+" eMancu
 
 " Go to mark at the colum where the mark was set
 map ' `

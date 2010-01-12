@@ -10,7 +10,6 @@ function! CommentAndUncomment()
   elseif stridx(file, ".html") != -1
     call CommentForHTML()
   endif
-
 endfunction
 
 function! CommentForHTML()
