@@ -6,8 +6,8 @@ map <S-F1> :tabnew $HOME/Code/Samples/mo.mo<CR>:tabm 0<CR>
 map <F2> :tabnew<CR>:MRU <CR>
 map <S-F2> :MRU <CR>
 
-" Open tasks
-map <F3> :tabnew $HOME/.taskpaper<CR>:tabm 0<CR>
+" Open Tree
+map <F3> :NERDTreeToggle <CR>
 
 " Toggle spell
 map <F4> <ESC>:set spell!<CR>
