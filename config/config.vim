@@ -35,6 +35,7 @@ hi StatusLine ctermfg=Gray ctermbg=Black
 hi StatusLineNC ctermfg=DarkGray ctermbg=Black
 hi CursorLine cterm=NONE  ctermbg=DarkBlue
 hi MatchParen ctermbg=Black ctermfg=DarkYellow
+hi LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
 
 " Temp files
 set nobackup
@@ -58,6 +59,11 @@ set wildmode=list:longest
 if $SHELL =~ 'bin/fish'
   set shell=/bin/sh
 endif
+
+" Fuzzyfinder configuration
+let g:fuzzy_ignore = "*.png;*.jpg;*.gif;vendor/**;coverage/**;tmp/**"
+let g:fuzzy_matching_limit = 20
+
 
 " Case insensitive, incremental search, manual folds, etc.
 set nocompatible

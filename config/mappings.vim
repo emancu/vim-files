@@ -7,7 +7,7 @@ map <F2> :tabnew<CR>:MRU <CR>
 map <S-F2> :MRU <CR>
 
 " Open Tree
-map <F3> :NERDTreeToggle <CR>
+map <F3> :Vex <CR>3i
 
 " Toggle spell
 map <F4> <ESC>:set spell!<CR>
@@ -42,7 +42,7 @@ nmap <Leader>enc :set paste<CR>ggi# encoding: UTF-8<CR><CR><ESC>:set nopaste<CR>
 map <A-Left> :bN <CR>
 map <A-Right> :bn <CR>
 
-map gb :buffer 
+map gb :buffer
 
 " eMancu
 
@@ -90,7 +90,7 @@ imap <C-L> <ESC>la
 imap <C-H> <ESC>ha
 
 " Open file in new tab
-nmap <C-O> :tabe 
+nmap <C-O> :tabe
 
 " Run git blame in the current file and display results in the preview window.
 map <C-G> :call PreviewResults("git blame " . expand("%"))<CR>
