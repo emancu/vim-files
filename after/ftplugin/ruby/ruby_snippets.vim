@@ -17,6 +17,7 @@ call IMAP('{}', "\{<++>\}", 'ruby')
 call IMAP('++', " += 1", 'ruby')
 call IMAP('--', " -= 1", 'ruby')
 call IMAP('=.', " => ", 'ruby')
+call IMAP('<+', " <++> ", 'ruby')
 
 " RDoc
 call IMAP('nodoc--', '#:nodoc:', 'ruby')

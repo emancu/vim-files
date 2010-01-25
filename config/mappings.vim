@@ -13,19 +13,23 @@ map <F3> :Vex <CR>3i
 map <F4> <ESC>:set spell!<CR>
 imap <F4> <ESC>:set spell!<CR>
 
+" Create a gist with the selection
+map <F5> <ESC>:'<,'>Gist<CR>
+map <S-F5> <ESC>:Gist<CR>
+
 " Execute files with Ruby 1.9
 map <F6> <ESC>:w!<CR>:!ruby1.9 %<CR>
 map <S-F6> <ESC>:w!<CR>:!ruby1.9 -c %<CR>
 
 " Format selection with par
-vmap <F8> :!par<CR>
+map <F8> ggVG=''
 
 " Toggle search highlight
 map <F10> :set hlsearch!<CR>
 imap <F10> <ESC>:set hlsearch!<CR>a
 
 " Handle trailing whitespaces and tabs.
-map <F11> <ESC>:%s/\s*$//g<CR>:%s/\t/  /<CR>
+map <F11> <ESC>ggVG=<ESC>:%s/\s*$//g<CR>:%s/\t/  /<CR>
 
 " Start and stop the webserver
 map <Leader>start <ESC>:!thin start -R config.ru -d<CR>
@@ -90,7 +94,7 @@ imap <C-L> <ESC>la
 imap <C-H> <ESC>ha
 
 " Open file in new tab
-nmap <C-O> :tabe
+nmap <C-O> :tabe 
 
 " Run git blame in the current file and display results in the preview window.
 map <C-G> :call PreviewResults("git blame " . expand("%"))<CR>

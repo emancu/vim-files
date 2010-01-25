@@ -79,6 +79,7 @@ set incsearch
 set hlsearch
 
 " Other files.
+source ~/.vim/config/gist.vim
 source ~/.vim/config/mappings.vim
 source ~/.vim/config/commenter.vim
 source ~/.vim/config/execute-file.vim
