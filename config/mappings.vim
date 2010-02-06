@@ -21,15 +21,21 @@ map <S-F5> <ESC>:Gist<CR>
 map <F6> <ESC>:w!<CR>:!ruby1.9 %<CR>
 map <S-F6> <ESC>:w!<CR>:!ruby1.9 -c %<CR>
 
-" Format selection with par
+" F7 is mapped to open snippets
+" map <F7>
+
+" Auto indent
 map <F8> ggVG=''
+
+" Select word and find next occurrence
+map <F9> <ESC>*
 
 " Toggle search highlight
 map <F10> :set hlsearch!<CR>
 imap <F10> <ESC>:set hlsearch!<CR>a
 
 " Handle trailing whitespaces and tabs.
-map <F11> <ESC>ggVG=<ESC>:%s/\s*$//g<CR>:%s/\t/  /<CR>
+map <F11> <ESC>:%s/\s*$//g<CR>:%s/\t/  /<CR>
 
 " Start and stop the webserver
 map <Leader>start <ESC>:!thin start -R config.ru -d<CR>
@@ -72,8 +78,8 @@ imap <2-MiddleMouse> <Nop>
 " Deactivate recording
 map q <Nop>
 
-" Deactivate keyword lookup
-map K <Nop>
+" Same as J but staying a line below
+map K <ESC>kJ
 
 " After a repeat operation, go back to the first character of the previously changed or yanked text
 nmap . .`[
@@ -98,3 +104,7 @@ nmap <C-O> :tabe
 
 " Run git blame in the current file and display results in the preview window.
 map <C-G> :call PreviewResults("git blame " . expand("%"))<CR>
+
+map <C-n> <ESC>:tabnew<CR>:FuzzyFinderTextMate<CR>
+map <C-b> <ESC>:tabnew<CR>:FuzzyFinderBookmark<CR>
+map <D-d> <ESC>:FuzzyFinderAddBookmark<CR><CR>

@@ -307,7 +307,7 @@ function! s:GistUpdate(user, token, content, gistid, gistnm)
   let res = substitute(res, '^.*: ', '', '')
   if len(res) > 0 && res != 'http://gist.github.com/gists' 
     setlocal nomodified
-    echo 'Done: '.res
+    echo ''.res
   else
     echoerr 'Edit failed'
   endif
