@@ -39,7 +39,7 @@ If the error displayed is:
 
     Argument required
 
-You have ruby interpretation enabled! Otherwise, if error is a like:
+You have ruby interpretation enabled! Otherwise, if error is like a:
 
     Sorry, the command is not available in this version
 
