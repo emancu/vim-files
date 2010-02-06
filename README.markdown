@@ -25,3 +25,25 @@ And in your `~/.gvimrc` put this:
 You may want to explore the `~/.vim/config` directory to see what's
 included and `~/.vim/config/mappings.vim` to see how to use the
 available tools.
+
+Fuzzy Finder like TextMate plugin
+---------------------------------
+
+For use this plugin, you need ruby interpretation for your vim or MacVim.
+
+To check if it's available, you can run a simple command like:
+
+    :ruby
+
+If the error displayed is:
+
+    Argument required
+
+You have ruby interpretation enabled! Otherwise, if error is a like:
+
+    Sorry, the command is not available in this version
+
+You have to compile your own vim, please check this site for instructions
+
+    http://www.elblogolico.com.ar/2010/02/macvim-mi-editor.html
+
