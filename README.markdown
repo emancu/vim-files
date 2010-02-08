@@ -29,7 +29,7 @@ available tools.
 Fuzzy Finder like TextMate plugin
 ---------------------------------
 
-For use this plugin, you need ruby interpretation for your vim or MacVim.
+To use this plugin, you need ruby interpretation for your vim or MacVim.
 
 To check if it's available, you can run a simple command like:
 
