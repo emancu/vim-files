@@ -10,8 +10,8 @@ map <S-F2> :MRU <CR>
 map <F3> :Vex <CR>3i
 
 " Toggle spell
-map <F4> <ESC>:set spell!<CR>
-imap <F4> <ESC>:set spell!<CR>
+map <F4> <ESC>:call ExecuteTest()<CR>
+imap <F4> <ESC>:call ExecuteTest()<CR>
 
 " Create a gist with the selection
 map <F5> <ESC>:'<,'>Gist<CR>
