@@ -61,7 +61,7 @@ if $SHELL =~ 'bin/fish'
 endif
 
 " Fuzzyfinder configuration
-let g:fuzzy_ignore = "*.png;*.jpg;*.gif;vendor/**;coverage/**;tmp/**"
+let g:fuzzy_ignore = "*.png;*.jpg;*.gif;vendor/**;coverage/**;tmp/**;./log/**;./voxeo_utils/**;./bin/**;./doc/**;"
 let g:fuzzy_matching_limit = 20
 
 

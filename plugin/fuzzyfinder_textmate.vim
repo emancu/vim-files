@@ -55,7 +55,7 @@ RUBY
   " A delimited list of file glob patterns to ignore. Entries may be delimited
   " with either commas or semi-colons.
   if !exists('g:fuzzy_ignore')
-    let g:fuzzy_ignore = ""
+    let g:fuzzy_ignore = "./vendor*;./log*;./voxeo_utils*;./bin*;./doc*;"
   endif
 
   " Configuration option: g:fuzzy_path_display
