@@ -14,12 +14,12 @@ map <F4> <ESC>:call ExecuteTest()<CR>
 imap <F4> <ESC>:call ExecuteTest()<CR>
 
 " Create a gist with the selection
-map <F5> <ESC>:'<,'>Gist<CR>
-map <S-F5> <ESC>:Gist<CR>
+map <F5> <ESC>:'<,'>Gist -p<CR>
+map <S-F5> <ESC>:Gist -p<CR>
 
 " Execute files with Ruby 1.9
-map <F6> <ESC>:w!<CR>:!ruby1.9 %<CR>
-map <S-F6> <ESC>:w!<CR>:!ruby1.9 -c %<CR>
+map <F6> <ESC>:w!<CR>:!ruby %<CR>
+map <S-F6> <ESC>:w!<CR>:!ruby -c %<CR>
 
 " F7 is mapped to open snippets
 " map <F7>

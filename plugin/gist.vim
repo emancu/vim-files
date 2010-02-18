@@ -408,7 +408,7 @@ function! s:GistPost(user, token, content, private)
   let res = matchstr(split(res, '\(\r\?\n\|\r\n\?\)'), '^Location: ')
   let res = substitute(res, '^.*: ', '', '')
   if len(res) > 0 && res =~ '^\(http\|https\):\/\/gist\.github\.com\/' 
-    echo 'Done: '.res
+    echo ''.res
   else
     echoerr 'Post failed'
   endif
