@@ -40,6 +40,9 @@ augroup filetypedetect
   " Raven
   au! BufNewFile,BufRead *.rv setf raven
 
+  " Ruby
+  au! BufNewFile,BufRead *.rb,*.rbw,8.gem setf ruby
+
   " Sass files
   au! BufNewFile,BufRead *.sass setf sass
 
