@@ -29,9 +29,13 @@ if has("gui_running")
   highlight Normal                    guifg=#E6E1DC guibg=#090909
   highlight Cursor                    guifg=#000000 guibg=#FFFFFF
   highlight NonText                   guifg=#333333 guibg=#000000
-  highlight CursorLine               guibg=#323300
 
-  " highlight Comment                   guifg=#BC9458 gui=italic
+  " added by eMancu
+  highlight CursorLine                guibg=#003333
+  highlight PmenuSel                  guibg=#554433
+  highlight PMenu                     guifg=#444444 guibg=#d6f5c4 gui=none
+  highlight Comment                   guifg=#BC9458 gui=italic
+
   " highlight SpellBad                  guifg=#990000 guibg=#000000
   highlight Comment                   guifg=#666666 gui=italic
   highlight Constant                  guifg=#6D9CBE
