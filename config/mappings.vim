@@ -27,7 +27,8 @@ map <S-F6> <ESC>:w!<CR>:!ruby -c %<CR>
 " map <F7>
 
 " Auto indent
-map <F8> ggVG=''
+"map <F8> ggVG=''
+map <F8> :!ruby $HOME/.vim/ruby/rbeautify.rb %<CR>:e!<CR>
 
 " Select word and find next occurrence
 map <F9> <ESC>*
