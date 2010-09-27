@@ -53,7 +53,7 @@ if has("gui_running")
   highlight Statement                 guifg=#CC7833 gui=NONE
   highlight String                    guifg=#A5C261
   highlight Title                     guifg=#FFFFFF
-  highlight Todo                      guibg=#000000 guifg=#996600 gui=italic
+  highlight Todo                      guibg=#000000 guifg=#FF6600 gui=italic
   highlight Type                      guifg=#DA4939 gui=NONE
   " highlight Visual                    guibg=#5A647E
   highlight Visual                    guibg=#181818

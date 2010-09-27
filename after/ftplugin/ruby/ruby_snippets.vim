@@ -3,7 +3,6 @@ set sw=2
 set ts=2
 
 " Ruby
-call IMAP('##', '#{<++>}', 'ruby')
 call IMAP('def--', "def <++>\n<++>\nend", 'ruby')
 call IMAP('do--', "do |<++>|\n<++>\nend", 'ruby')
 call IMAP('{--', "{ |<++>| <++> }", 'ruby')

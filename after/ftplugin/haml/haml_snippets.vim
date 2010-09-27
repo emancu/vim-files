@@ -12,6 +12,7 @@ call IMAP('||', "\|<++>\|", 'haml')
 call IMAP('()', "\(<++>\)", 'haml')
 call IMAP('[]', "\[<++>\]", 'haml')
 call IMAP('{}', "\{<++>\}", 'haml')
+call IMAP('=.', " => ", 'haml')
 
 " HTML
 call IMAP('h1-', '%h1=', 'haml')

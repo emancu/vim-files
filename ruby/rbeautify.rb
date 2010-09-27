@@ -194,7 +194,7 @@ module RBeautify
          dest,error = beautify_string(source,path)
          if(source != dest)
             # make a backup copy
-            File.open(path + "~","w") { |f| f.write(source) }
+            # File.open(path + "~","w") { |f| f.write(source) }
             # overwrite the original
             File.open(path,"w") { |f| f.write(dest) }
          end
