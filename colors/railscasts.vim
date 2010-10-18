@@ -27,14 +27,18 @@ if has("gui_running")
   hi link htmlEndTag                  xmlEndTag
 
   highlight Normal                    guifg=#E6E1DC guibg=#090909
-  highlight Cursor                    guifg=#000000 guibg=#FFFFFF
+  highlight Cursor                    guifg=#000000 guibg=#EBDDCA
   highlight NonText                   guifg=#333333 guibg=#000000
 
   " added by eMancu
   highlight CursorLine                guibg=#003333
   highlight PmenuSel                  guibg=#554433
-  highlight PMenu                     guifg=#444444 guibg=#d6f5c4 gui=none
-  highlight Comment                   guifg=#BC9458 gui=italic
+  highlight PMenu                     guifg=#444444 guibg=#D6F5C4 gui=none
+
+  " added for ComandT plugin
+  highlight CommandTSelection         guifg=#E6E1DC guibg=#554433
+  " doesn't exist yet
+  "highlight CommandTMenu              guifg=#444444 guibg=#D6F5C4 gui=none
 
   " highlight SpellBad                  guifg=#990000 guibg=#000000
   highlight Comment                   guifg=#666666 gui=italic
@@ -45,9 +49,11 @@ if has("gui_running")
   highlight Identifier                guifg=#6D9CBE gui=NONE
   highlight Include                   guifg=#CC7833 gui=NONE
   highlight Keyword                   guifg=#CC7833
-  highlight LineNr                    guifg=#2B2B2B guibg=#000000
-  highlight Number                    guifg=#A5C261
-  " highlight Number                    guifg=#6D9CBE gui=NONE
+  highlight LineNr                    guifg=#554433 guibg=#121212
+
+  " lightgreen like keys on ruby
+  " highlight Number                    guifg=#A5C261
+  highlight Number                    guifg=#6D9CBE gui=NONE
   highlight PreProc                   guifg=#E6E1DC
   highlight Search                    guibg=#FFFF00
   highlight Statement                 guifg=#CC7833 gui=NONE
@@ -55,8 +61,10 @@ if has("gui_running")
   highlight Title                     guifg=#FFFFFF
   highlight Todo                      guibg=#000000 guifg=#FF6600 gui=italic
   highlight Type                      guifg=#DA4939 gui=NONE
-  " highlight Visual                    guibg=#5A647E
-  highlight Visual                    guibg=#181818
+
+  " Visual mode - line selected
+  "highlight Visual                    guibg=#554433
+  highlight Visual                    guibg=#003366
   highlight Folded                    guifg=#666666 guibg=#111111
 
   highlight VertSplit                 guifg=#202020 guibg=#202020 gui=NONE   ctermfg=darkgray ctermbg=darkgray cterm=NONE
