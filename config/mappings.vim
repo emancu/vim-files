@@ -109,4 +109,4 @@ nmap <C-E> :tabe <C-R>=expand("%:p:h") . "/"<CR>
 " Run git blame in the current file and display results in the preview window.
 map <C-G> :call PreviewResults("git blame " . expand("%"))<CR>
 
-map <C-t> <ESC>:tabnew<CR>:CommandT<CR>
+map <C-n> <ESC>:tabnew<CR>:CommandT<CR>

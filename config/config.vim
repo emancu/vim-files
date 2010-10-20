@@ -64,6 +64,12 @@ endif
 "let g:fuzzy_ignore = '*.png;*.jpg;*.gif;vendor/**;coverage/**;tmp/**;./log/**;./voxeo_utils/**;./bin/**;./doc/**;'
 "let g:fuzzy_matching_limit = 20
 
+" Command-T configuration
+let g:CommandTMaxDepth=10
+let g:CommandTMaxHeight=30
+let g:CommandTMatchWindowAtTop = 1
+
+set wildignore=*.png,*.jpg,*.gif,vendor/**,coverage/**,tmp/**,./log/**,./voxeo_utils/**,./bin/**,./doc/**
 
 " Case insensitive, incremental search, manual folds, etc.
 set nocompatible
