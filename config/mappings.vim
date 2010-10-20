@@ -1,6 +1,6 @@
-" Open scratch files for Ruby (F1) and Mo (S-F1)
-map <F1> :tabnew $HOME/Code/Samples/ruby.rb<CR>:tabm 0<CR>
-map <S-F1> :tabnew $HOME/Code/Samples/mo.mo<CR>:tabm 0<CR>
+" Show/Hide menu items. Perfect for GVim
+map <F1> :set guioptions+=m<CR>
+map <S-F1> :set guioptions-=m<CR>
 
 " Source current file
 map <F2> :tabnew<CR>:MRU <CR>
@@ -110,3 +110,8 @@ nmap <C-E> :tabe <C-R>=expand("%:p:h") . "/"<CR>
 map <C-G> :call PreviewResults("git blame " . expand("%"))<CR>
 
 map <C-n> <ESC>:tabnew<CR>:CommandT<CR>
+
+" Tipically copy/paste usage
+vmap <C-x> "+x
+vmap <C-c> "+y
+map  <C-v> "+gP
