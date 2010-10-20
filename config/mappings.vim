@@ -110,6 +110,3 @@ nmap <C-E> :tabe <C-R>=expand("%:p:h") . "/"<CR>
 map <C-G> :call PreviewResults("git blame " . expand("%"))<CR>
 
 map <C-t> <ESC>:tabnew<CR>:CommandT<CR>
-map <C-n> <ESC>:tabnew<CR>:FuzzyFinderTextMate<CR>
-map <C-b> <ESC>:tabnew<CR>:FuzzyFinderBookmark<CR>
-map <D-d> <ESC>:FuzzyFinderAddBookmark<CR><CR>
