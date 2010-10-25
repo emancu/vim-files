@@ -33,7 +33,7 @@ hi TabLineFill cterm=bold ctermfg=Black ctermbg=DarkGray
 hi TabLineSel cterm=NONE ctermfg=White ctermbg=DarkRed
 hi StatusLine ctermfg=Gray ctermbg=Black
 hi StatusLineNC ctermfg=DarkGray ctermbg=Black
-hi CursorLine cterm=NONE  ctermbg=DarkBlue
+hi CursorLine cterm=NONE  ctermbg=23
 hi MatchParen ctermbg=Black ctermfg=DarkYellow
 hi LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
 

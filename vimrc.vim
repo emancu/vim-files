@@ -6,8 +6,8 @@ set backspace=indent,eol,start
 syn sync fromstart
 
 " Color settings
-" set t_Co=256
-"colorscheme railscasts
+"set t_Co=256
+colorscheme railscasts
 
 " Load common settings
 source ~/.vim/config/config.vim

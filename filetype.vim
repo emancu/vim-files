@@ -13,6 +13,12 @@ augroup filetypedetect
   " Fish functions
   au! BufNewFile,BufRead *.fish setf fish
 
+  " Makefile
+  au! BufNewFile,BufRead Makefile setf makefile
+
+  " C language
+  au! BufNewFile,BufRead *.h, *.c, *.cpp setf cpp
+
   " Haml xHTML Abstraction Markup Language
   au! BufNewFile,BufRead *.haml setf haml
 

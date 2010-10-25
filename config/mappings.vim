@@ -52,8 +52,11 @@ nmap <Leader>enc :set paste<CR>ggi# encoding: UTF-8<CR><CR><ESC>:set nopaste<CR>
 "map gF :w! /tmp/spec.results<CR><C-W>gF<CR>
 
 " added by eMancu
-map <A-Left> :bN <CR>
-map <A-Right> :bn <CR>
+map <A-Left> :tabp <CR>
+map <A-Right> :tabn <CR>
+
+map <C-w> <ESC>:q! <CR>
+imap <C-w> <ESC>:q! <CR>
 
 map gb :buffer
 
