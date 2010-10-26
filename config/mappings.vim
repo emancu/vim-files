@@ -1,6 +1,5 @@
 " Show/Hide menu items. Perfect for GVim
-map <F1> :set guioptions+=m<CR>
-map <S-F1> :set guioptions-=m<CR>
+map <silent> <F1> :if &guioptions =~# 'm' <Bar> set guioptions-=m <bar> else <Bar> set guioptions+=m <Bar> endif<CR>
 
 " Source current file
 map <F2> :tabnew<CR>:MRU <CR>
