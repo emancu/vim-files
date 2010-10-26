@@ -7,7 +7,8 @@ syn sync fromstart
 
 " Color settings
 "set t_Co=256
-colorscheme railscasts
+"colorscheme railscasts
 
 " Load common settings
+source ~/.vim/abbreviations.vim
 source ~/.vim/config/config.vim
