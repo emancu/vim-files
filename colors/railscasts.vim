@@ -92,11 +92,11 @@ else
     set t_Co=256
     highlight Normal ctermfg=White ctermbg=Black
     highlight Number ctermfg=White ctermbg=Black
-    highlight LineNr ctermfg=DarkGray ctermbg=Black
+    highlight LineNr ctermfg=8 ctermbg=Black
     highlight Cursor ctermfg=Black ctermbg=Yellow
     highlight Keyword ctermfg=202
     highlight Define ctermfg=202
-    highlight Comment ctermfg=DarkGray
+    highlight Comment ctermfg=8
     highlight Type ctermfg=White
     highlight rubySymbol ctermfg=66
     highlight Identifier ctermfg=White
@@ -113,5 +113,5 @@ else
     highlight Search ctermbg=White
     highlight Todo ctermbg=Black ctermfg=Yellow
     highlight ModeMsg ctermfg=white ctermbg=DarkGreen
-    highlight NonText ctermfg=DarkGray ctermbg=Black
+    highlight NonText ctermfg=8 ctermbg=Black
 endif
