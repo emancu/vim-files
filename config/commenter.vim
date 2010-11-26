@@ -9,6 +9,14 @@ function! CommentAndUncomment()
     call CommentForHTML()
   elseif stridx(file, ".html") != -1
     call CommentForHTML()
+  elseif stridx(file, ".c") != -1
+    call CommentForC_Java()
+  elseif stridx(file, ".h") != -1
+    call CommentForC_Java()
+  elseif stridx(file, ".cpp") != -1
+    call CommentForC_Java()
+  elseif stridx(file, ".java") != -1
+    call CommentForC_Java()
   endif
 endfunction
 
@@ -27,6 +35,15 @@ function! CommentForRuby()
     call setline(".", substitute(s:line, "\\(\\s*\\)# ", "\\1", ""))
   elseif match(s:line, '^\s*[^#]') != -1
     call setline(".", substitute(s:line, "\\(\\s*\\)", "\\1# ", ""))
+  end
+endfunction
+
+function! CommentForC_Java()
+  let s:line = getline(".")
+  if match(s:line, '^\s*\/\/ ') != -1
+    call setline(".", substitute(s:line, "\\(\\s*\\)\/\/ ", "\\1", ""))
+  elseif match(s:line, '^\s*[^\/\/]') != -1
+    call setline(".", substitute(s:line, "\\(\\s*\\)", "\\1\/\/ ", ""))
   end
 endfunction
 
