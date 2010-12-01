@@ -55,6 +55,7 @@ module CommandT
 
       # show match window
       split_location = options[:match_window_at_top] ? 'topleft' : 'botright'
+      ::VIM::command 'highlight Normal guifg=#444444 guibg=#D6F5C4 gui=none' # added by eMancu
       if @@buffer # still have buffer from last time
         ::VIM::command "silent! #{split_location} #{@@buffer.number}sbuffer"
         raise "Can't re-open GoToFile buffer" unless $curbuf.number == @@buffer.number
@@ -75,8 +76,7 @@ module CommandT
           'setlocal nocursorline',      # don't highlight line cursor is on
           'setlocal nospell',           # spell-checking off
           'setlocal nobuflisted',       # don't show up in the buffer list
-          'setlocal textwidth=0',       # don't hard-wrap (break long lines)
-          'highlight Normal guifg=#444444 guibg=#D6F5C4 gui=none' # added by eMancu
+          'setlocal textwidth=0'        # don't hard-wrap (break long lines)
         ].each { |command| ::VIM::command command }
 
         # sanity check: make sure the buffer really was created
