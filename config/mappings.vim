@@ -115,4 +115,5 @@ map <C-r> g+
 " Tipically copy/paste usage
 vmap <C-x> "+x
 vmap <C-c> "+y
-imap  <C-v> "+gP
+imap  <C-v> <ESC>"+gP i
+
