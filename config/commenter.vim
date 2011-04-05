@@ -5,6 +5,8 @@ function! CommentAndUncomment()
 
   if stridx(file, ".rb") != -1
     call CommentForRuby()
+  elseif stridx(file, ".yml") != -1
+    call CommentForRuby()
   elseif stridx(file, ".erb") != -1
     call CommentForHTML()
   elseif stridx(file, ".html") != -1
