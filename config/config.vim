@@ -13,6 +13,7 @@ set fillchars="vert:YXXY,fold:-"
 
 " Set spellcheck to English
 set spelllang=en_us
+set spellsuggest=5
 
 " Tabs management
 set expandtab

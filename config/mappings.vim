@@ -54,9 +54,6 @@ nmap <Leader>enc :set paste<CR>ggi# encoding: UTF-8<CR><CR><ESC>:set nopaste<CR>
 map <A-Left> :tabp <CR>
 map <A-Right> :tabn <CR>
 
-map <C-w> <ESC>:q! <CR>
-imap <C-w> <ESC>:q! <CR>
-
 map gb :buffer
 
 " eMancu
@@ -79,9 +76,6 @@ map <MiddleMouse> <Nop>
 map <2-MiddleMouse> <Nop>
 imap <MiddleMouse> <Nop>
 imap <2-MiddleMouse> <Nop>
-
-" Deactivate recording
-map q <Nop>
 
 " Same as J but staying a line below
 map K <ESC>kJ
@@ -113,7 +107,12 @@ map <C-G> :call PreviewResults("git blame " . expand("%"))<CR>
 
 map <C-n> <ESC>:tabnew<CR>:CommandT<CR>
 
+" Undo & Redo cross-branch for a better solution watch vimcasts episode 30
+" or try plugin: http://sjl.bitbucket.org/gundo.vim/
+map u g-
+map <C-r> g+
+
 " Tipically copy/paste usage
 vmap <C-x> "+x
 vmap <C-c> "+y
-map  <C-v> "+gP
+imap  <C-v> "+gP
