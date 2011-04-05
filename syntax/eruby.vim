@@ -1,76 +1,39 @@
 " Vim syntax file
-" Language:    eRuby
-" Maintainer:    Tim Pope <vimNOSPAM@tpope.org>
-" URL:      http://vim-ruby.rubyforge.org
-" Anon CVS:    See above site
-" Release Coordinator:  Doug Kearns <dougkearns@gmail.com>
+" Language:   eruby
+" Maintainer:  Michael Brailsford <brailsmt@yahoo.com>
+" Installation:
+"  To automatilcally load this file when a .rhtml file is opened, add the
+"  following lines to ~/.vim/filetype.vim:
+"
+"    augroup filetypedetect
+"       au! BufRead,BufNewFile *.rhtml    setfiletype eruby
+"     augroup END
+"
+"  You will have to restart vim for this to take effect.  In any case it
+"  is a good idea to read ":he new-filetype" so that you know what is going
+"  on, and why the above lines work.
 
-if exists("b:current_syntax")
+if version < 600
+  syntax clear
+elseif exists("b:current_syntax")
   finish
 endif
 
-if !exists("main_syntax")
-  let main_syntax = 'eruby'
-endif
+"Source the html syntax file
+ru! syntax/html.vim
+"Set the filetype to html to load the html ftplugins
+set ft=html
+unlet b:current_syntax
 
-if !exists("g:eruby_default_subtype")
-  let g:eruby_default_subtype = "html"
-endif
-
-if !exists("b:eruby_subtype") && main_syntax == 'eruby'
-  let s:lines = getline(1)."\n".getline(2)."\n".getline(3)."\n".getline(4)."\n".getline(5)."\n".getline("$")
-  let b:eruby_subtype = matchstr(s:lines,'eruby_subtype=\zs\w\+')
-  if b:eruby_subtype == ''
-    let b:eruby_subtype = matchstr(&filetype,'^eruby\.\zs\w\+')
-  endif
-  if b:eruby_subtype == ''
-    let b:eruby_subtype = matchstr(substitute(expand("%:t"),'\c\%(\.erb\|\.eruby\|\.erubis\)\+$','',''),'\.\zs\w\+$')
-  endif
-  if b:eruby_subtype == 'rhtml'
-    let b:eruby_subtype = 'html'
-  elseif b:eruby_subtype == 'rb'
-    let b:eruby_subtype = 'ruby'
-  elseif b:eruby_subtype == 'yml'
-    let b:eruby_subtype = 'yaml'
-  elseif b:eruby_subtype == 'js'
-    let b:eruby_subtype = 'javascript'
-  elseif b:eruby_subtype == 'txt'
-    " Conventional; not a real file type
-    let b:eruby_subtype = 'text'
-  elseif b:eruby_subtype == ''
-    let b:eruby_subtype = g:eruby_default_subtype
-  endif
-endif
-
-if !exists("b:eruby_nest_level")
-  let b:eruby_nest_level = strlen(substitute(substitute(substitute(expand("%:t"),'@','','g'),'\c\.\%(erb\|rhtml\)\>','@','g'),'[^@]','','g'))
-endif
-if !b:eruby_nest_level
-  let b:eruby_nest_level = 1
-endif
-
-if exists("b:eruby_subtype") && b:eruby_subtype != ''
-  exe "runtime! syntax/".b:eruby_subtype.".vim"
-  unlet! b:current_syntax
-endif
+"Put the ruby syntax file in @rubyTop
 syn include @rubyTop syntax/ruby.vim
 
-syn cluster erubyRegions contains=erubyOneLiner,erubyBlock,erubyExpression,erubyComment
+syn region erubyBlock matchgroup=erubyRubyDelim start=#<%=\?# end=#%># keepend containedin=ALL contains=@rubyTop,erubyEnd
+syn region erubyComment start=+<%#+ end=#%># keepend
+syn match erubyEnd #\<end\>#
 
-exe 'syn region  erubyOneLiner   matchgroup=erubyDelimiter start="^%\{1,'.b:eruby_nest_level.'\}%\@!"    end="$"     contains=@rubyTop       containedin=ALLBUT,@erubyRegions keepend oneline'
-exe 'syn region  erubyBlock      matchgroup=erubyDelimiter start="<%\{1,'.b:eruby_nest_level.'\}%\@!-\=" end="[=-]\=%\@<!%\{1,'.b:eruby_nest_level.'\}>" contains=@rubyTop  containedin=ALLBUT,@erubyRegions keepend'
-exe 'syn region  erubyExpression matchgroup=erubyDelimiter start="<%\{1,'.b:eruby_nest_level.'\}=\{1,4}" end="[=-]\=%\@<!%\{1,'.b:eruby_nest_level.'\}>" contains=@rubyTop  containedin=ALLBUT,@erubyRegions keepend'
-exe 'syn region  erubyComment    matchgroup=erubyDelimiter start="<%\{1,'.b:eruby_nest_level.'\}#"       end="%\@<!%\{1,'.b:eruby_nest_level.'\}>" contains=rubyTodo,@Spell containedin=ALLBUT,@erubyRegions keepend'
+hi link erubyRubyDelim todo
+hi link erubyComment comment
+hi link erubyEnd rubyControl
 
-" Define the default highlighting.
-
-hi def link erubyDelimiter    PreProc
-hi def link erubyComment    Comment
-
-let b:current_syntax = 'eruby'
-
-if main_syntax == 'eruby'
-  unlet main_syntax
-endif
-
-" vim: nowrap sw=2 sts=2 ts=8:
+" vim: set ts=4 sw=4:
