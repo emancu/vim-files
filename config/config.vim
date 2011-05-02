@@ -56,15 +56,6 @@ set complete=.,w,b,u
 set wildmenu
 set wildmode=list:longest
 
-" Fool Vim in case I'm running Fish shell
-if $SHELL =~ 'bin/fish'
-  set shell=/bin/sh
-endif
-
-" Fuzzyfinder configuration
-"let g:fuzzy_ignore = '*.png;*.jpg;*.gif;vendor/**;coverage/**;tmp/**;./log/**;./voxeo_utils/**;./bin/**;./doc/**;'
-"let g:fuzzy_matching_limit = 20
-
 " Command-T configuration
 let g:CommandTMaxDepth=10
 let g:CommandTMaxHeight=30
@@ -84,6 +75,9 @@ set foldmethod=manual
 set number
 set incsearch
 set hlsearch
+
+" Machit plugin requires this
+filetype plugin on
 
 " Other files.
 source ~/.vim/config/gist.vim
