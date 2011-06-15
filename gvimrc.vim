@@ -1,5 +1,5 @@
 " Configure GUI
-set guitablabel=%N.\ %t
+set guitablabel=%N.\ %t%(\ %M% )
 set showtabline=2
 set guioptions-=T
 set guioptions-=F
