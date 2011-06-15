@@ -17,6 +17,8 @@ function! CommentAndUncomment()
     call CommentForC_Java()
   elseif stridx(file, ".cpp") != -1
     call CommentForC_Java()
+  elseif stridx(file, ".js") != -1
+    call CommentForC_Java()
   elseif stridx(file, ".java") != -1
     call CommentForC_Java()
   endif

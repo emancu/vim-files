@@ -71,6 +71,8 @@ call IMAP('story--', "story \"<++>\" do\n<++>\nend", 'ruby')
 call IMAP('scenario--', "scenario \"<++>\" do\n<++>\nend", 'ruby')
 call IMAP('setup--', "setup do\n<++>\nend", 'ruby')
 call IMAP('teardown--', "teardown do\n<++>\nend", 'ruby')
+call IMAP('desc--', "describe \"<++>\" do\n<++>\nend", 'ruby')
+call IMAP('it--', "it \"should <++>\" do\n<++>\nend", 'ruby')
 
 " Stories with Webrat
 call IMAP('sop--', "save_and_open_page", 'ruby')

@@ -11,9 +11,10 @@ let maplocalleader = ","
 " Folds
 set fillchars="vert:YXXY,fold:-"
 
-" Set spellcheck to English
+" Set spellcheck to English. z= to suggestions
 set spelllang=en_us
 set spellsuggest=5
+"set spell
 
 " Tabs management
 set expandtab
