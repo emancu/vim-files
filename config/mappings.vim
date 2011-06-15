@@ -54,8 +54,6 @@ nmap <Leader>enc :set paste<CR>ggi# encoding: UTF-8<CR><CR><ESC>:set nopaste<CR>
 map <A-Left> :tabp <CR>
 map <A-Right> :tabn <CR>
 
-map gb :buffer
-
 " eMancu
 
 " Go to mark at the colum where the mark was set
@@ -100,7 +98,8 @@ imap <C-H> <ESC>ha
 
 " Open file in new tab
 nmap <C-O> :tabe 
-nmap <C-E> :tabe <C-R>=expand("%:p:h") . "/"<CR>
+nmap <C-e> :tabe <C-R>=expand("%:p:h") . "/"<CR>
+nmap <D-e> :e <C-R>=expand("%:p:h") . "/"<CR>
 
 " Run git blame in the current file and display results in the preview window.
 map <C-G> :call PreviewResults("git blame " . expand("%"))<CR>
@@ -115,5 +114,5 @@ map <C-r> g+
 " Tipically copy/paste usage
 vmap <C-x> "+x
 vmap <C-c> "+y
-imap  <C-v> <ESC>"+gP i
+imap <C-v> <ESC>"+gP i
 
