@@ -62,7 +62,7 @@ let g:CommandTMaxDepth=10
 let g:CommandTMaxHeight=30
 let g:CommandTMatchWindowAtTop = 1
 
-set wildignore=*.png,*.jpg,*.gif,vendor/**,coverage/**,tmp/**,./log/**,./voxeo_utils/**,./bin/**,./doc/**
+set wildignore=*.png,*.jpg,*.gif,coverage/**,tmp/**,./log/**,./voxeo_utils/**,./bin/**,docs/**
 
 " Case insensitive, incremental search, manual folds, etc.
 set nocompatible
