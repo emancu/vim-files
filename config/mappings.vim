@@ -12,7 +12,7 @@ map <F3> :Vex <CR>3i
 " -Run actual scenario TODO: do generic for other test plugins
 map <F4> <ESC>:call ExecuteTest()<CR>
 " I use / instead of ? because I need to search next in normal order.
-map <S-F4> <ESC>?scenario\|it<CR>:call ExecuteTest()<CR>
+map <S-F4> <ESC>/scenario\\|it <CR>N:call ExecuteTest()<CR>
 
 " Create a gist with the selection
 map <F5> <ESC>:'<,'>Gist -p<CR>
