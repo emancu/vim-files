@@ -21,6 +21,8 @@ function! CommentAndUncomment()
     call CommentForC_Java()
   elseif stridx(file, ".java") != -1
     call CommentForC_Java()
+  elseif stridx(file, ".js.coffee") != -1
+    call CommentForRuby()
   endif
 endfunction
 
