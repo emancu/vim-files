@@ -7,6 +7,8 @@ function! CommentAndUncomment()
     call CommentForRuby()
   elseif stridx(file, ".yml") != -1
     call CommentForRuby()
+  elseif stridx(file, ".haml") != -1
+    call CommentForC_Java()
   elseif stridx(file, ".erb") != -1
     call CommentForHTML()
   elseif stridx(file, ".html") != -1
