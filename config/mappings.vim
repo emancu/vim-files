@@ -97,8 +97,8 @@ imap <C-L> <ESC>la
 imap <C-H> <ESC>ha
 
 " Open file in new tab
-nmap <C-O> :tabe 
-nmap <C-e> :tabe <C-R>=expand("%:p:h") . "/"<CR>
+nmap <C-O> :tab drop 
+nmap <C-e> :tab drop <C-R>=expand("%:p:h") . "/"<CR>
 nmap <D-e> :e <C-R>=expand("%:p:h") . "/"<CR>
 
 " Run git blame in the current file and display results in the preview window.
