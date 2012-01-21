@@ -4,4 +4,6 @@
 :cabbr pt cd ~/grid/phonetag2
 :cabbr rumr cd ~/apps/rumr
 :cabbr recog cd ~/grid/recognizer
-:cabbr own cd ~/apps/owndry
+:cabbr sm cd ~/grid/SMRTouch
+:cabbr api cd ~/grid/SMRTouch-API
+:cabbr bj cd ~/grid/billing_jean
