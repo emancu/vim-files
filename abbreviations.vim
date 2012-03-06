@@ -1,9 +1,4 @@
 :cabbr ss cd ~/grid/simulscribe2.0
-:cabbr ss1 cd ~/grid/_ss1
 :cabbr pp cd ~/grid/poketypoke
-:cabbr pt cd ~/grid/phonetag2
-:cabbr rumr cd ~/apps/rumr
-:cabbr recog cd ~/grid/recognizer
-:cabbr sm cd ~/grid/SMRTouch
-:cabbr api cd ~/grid/SMRTouch-API
-:cabbr bj cd ~/grid/billing_jean
+
+:cabbr hf cd /Users/emancu/citrusbyte/att-innovate/HealthyFamily/app/js
