@@ -116,3 +116,4 @@ vmap <C-x> "+x
 vmap <C-c> "+y
 imap <C-v> <ESC>"+gP i
 
+map <C-m> <C-w>\|<C-w>_
