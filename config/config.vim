@@ -12,9 +12,9 @@ let maplocalleader = ","
 set fillchars="vert:YXXY,fold:-"
 
 " Set spellcheck to English. z= to suggestions
+"set spell
 set spelllang=en_us
 set spellsuggest=5
-"set spell
 
 " Tabs management
 set expandtab
@@ -28,6 +28,7 @@ set laststatus=2
 
 " Cursor line
 set cursorline
+" set cursorcolumn
 
 " Highlights
 hi TabLine cterm=bold ctermfg=Black ctermbg=DarkGray
