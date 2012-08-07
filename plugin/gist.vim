@@ -22,3 +22,5 @@ if !executable('curl')
 endif
 
 command! -nargs=? -range=% Gist :call gist#Gist(<count>, <line1>, <line2>, <f-args>)
+
+" vim:set et:
