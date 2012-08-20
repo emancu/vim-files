@@ -8,7 +8,7 @@ syn sync minlines=20
 
 " Color settings
 "set t_Co=256
-"colorscheme railscasts
+colorscheme jellybeans
 
 " Load common settings
 source ~/.vim/abbreviations.vim
