@@ -3,6 +3,7 @@ set sw=2
 set ts=2
 
 " Ruby
+" call IMAP('##', '#{<++>}', 'ruby')
 call IMAP('def--', "def <++>\n<++>\nend", 'ruby')
 call IMAP('do--', "do |<++>|\n<++>\nend", 'ruby')
 call IMAP('{--', "{ |<++>| <++> }", 'ruby')
@@ -14,28 +15,10 @@ call IMAP('()', "\(<++>\)", 'ruby')
 call IMAP('[]', "\[<++>\]", 'ruby')
 call IMAP('{}', "\{<++>\}", 'ruby')
 call IMAP('=.', " => ", 'ruby')
-" call IMAP('<+', " <++> ", 'ruby')
+call IMAP('<+', " <++> ", 'ruby')
 
 " RDoc
 call IMAP('nodoc--', '#:nodoc:', 'ruby')
-
-" Erb
-call IMAP('br--', '<br/>', 'eruby')
-call IMAP('h1--', '<h1><++></h1>', 'eruby')
-call IMAP('h2--', '<h2><++></h2>', 'eruby')
-call IMAP('h3--', '<h3><++></h3>', 'eruby')
-call IMAP('div--', '<div><++></div>', 'eruby')
-call IMAP('span--', '<span><++></span>', 'eruby')
-call IMAP('p--', '<p><++></p>', 'eruby')
-call IMAP('%%', '<% <++> %>', 'eruby')
-call IMAP('%$', '<%= <++> %>', 'eruby')
-call IMAP('<>', '< <++> >', 'eruby')
-call IMAP('=.', " => ", 'eruby')
-call IMAP('todo--', '<!-- TODO: <++> -->', 'eruby')
-call IMAP('//', '<!-- <++> -->', 'eruby')
-call IMAP('fix--', '<!-- FIXME: <++> -->', 'eruby')
-call IMAP('/?', '<!-- <++>', 'eruby')
-call IMAP('?/', ' --><++>', 'eruby')
 
 " Rails > Logger
 call IMAP('log--', "logger.info \"[DEBUG-FLAG] <++>\"", 'ruby')
@@ -74,6 +57,3 @@ call IMAP('it--', "it \"should <++>\" do\n<++>\nend", 'ruby')
 
 " Stories with Webrat
 call IMAP('sop--', "save_and_open_page", 'ruby')
-
-" Global imaps.
-call IMAP(',,', "`<++>`", '')

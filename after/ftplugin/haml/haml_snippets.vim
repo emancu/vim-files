@@ -10,8 +10,8 @@ call IMAP('""', "\"<++>\"", 'haml')
 call IMAP("''", "'<++>'", 'haml')
 call IMAP('||', "\|<++>\|", 'haml')
 call IMAP('()', "\(<++>\)", 'haml')
-call IMAP('[]', "\[<++>\]", 'haml')
-call IMAP('{}', "\{<++>\}", 'haml')
+"call IMAP('[]', "\[<++>\]", 'haml')
+"call IMAP('{}', "\{<++>\}", 'haml')
 call IMAP('=.', " => ", 'haml')
 
 " HTML
