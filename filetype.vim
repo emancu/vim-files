@@ -19,6 +19,9 @@ augroup filetypedetect
   " Haml xHTML Abstraction Markup Language
   au! BufNewFile,BufRead *.haml setf haml
 
+  " Mote
+  au! BufNewFile,BufRead *.mote setf mote
+
   " HTML with Ruby - eRuby
   au! BufNewFile,BufRead *.erb,*.rhtml setf eruby
 
