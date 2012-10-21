@@ -7,7 +7,7 @@ set backspace=indent,eol,start
 syn sync minlines=20
 
 " Color settings
-"set t_Co=256
+set t_Co=256
 colorscheme jellybeans
 
 " Load common settings
