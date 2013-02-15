@@ -118,3 +118,5 @@ imap <C-v> <ESC>"+gP i
 
 map <C-m> <C-w>\|<C-w>_
 " restores with <C-w>= or pressing enter
+
+command! W w
