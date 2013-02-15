@@ -3,6 +3,7 @@
 
 :cabbr hf cd /Users/emancu/citrusbyte/att-innovate/HealthyFamily/app/js
 :cabbr mh cd /Users/emancu/citrusbyte/att-innovate/mhealth
+:cabbr mapi cd /Users/emancu/citrusbyte/att-innovate/api
 
-:cabbr ei cd /Users/emancu/quov.is/ei-comply
-:cabbr ss cd /Users/emancu/quov.is/smart-safety
+:cabbr api cd /Users/emancu/citrusbyte/apihub
+
