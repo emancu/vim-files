@@ -5,6 +5,13 @@
 
 autocmd BufNewFile,BufRead *.coffee set filetype=coffee
 autocmd BufNewFile,BufRead *Cakefile set filetype=coffee
+autocmd BufNewFile,BufRead *.coffeekup,*.ck set filetype=coffee
+autocmd BufNewFile,BufRead *._coffee set filetype=coffee
 
-"folding is disabled by default but can be quickly toggled per-file by hitting: zi
-autocmd BufNewFile,BufReadPost *.coffee setl foldmethod=indent nofoldenable
+function! s:DetectCoffee()
+    if getline(1) =~ '^#!.*\<coffee\>'
+        set filetype=coffee
+    endif
+endfunction
+
+autocmd BufNewFile,BufRead * call s:DetectCoffee()
