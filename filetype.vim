@@ -28,17 +28,11 @@ augroup filetypedetect
   " Markdown files
   au! BufNewFile,BufRead *.markdown,*.md setf markdown
 
-  " Rack
-  au! BufNewFile,BufRead *.ru setf ruby
-
   " Ruby
-  au! BufNewFile,BufRead *.rb,*.rbw,8.gem setf ruby
+  au! BufNewFile,BufRead *.rb,*.rbw,*.gem,*.ru,*.thor,Thorfile,Rakefile setf ruby
 
   " Sass files
   au! BufNewFile,BufRead *.sass setf sass
-
-  " Thor files
-  au! BufNewFile,BufRead *.thor,Thorfile,Rakefile setf ruby
 
   " AsciiDoc
   au! FileType markdown,asciidoc setlocal spell
@@ -47,4 +41,9 @@ augroup filetypedetect
   " JSON
   au! BufNewFile,BufRead *.json setf javascript
 
+  " Citrus
+  au! BufNewFile,BufRead *.citrus setf citrus
+
+  " Toml
+  au! BufNewFile,BufRead *.toml setf toml
 augroup END
