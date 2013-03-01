@@ -82,9 +82,6 @@ set number
 set incsearch
 set hlsearch
 
-" Machit plugin requires this
-filetype plugin on
-
 " Other files.
 source ~/.vim/config/gist.vim
 source ~/.vim/config/mappings.vim
