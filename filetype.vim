@@ -4,9 +4,6 @@ endif
 
 augroup filetypedetect
 
-  " Bash aliases and functions
-  au! BufNewFile,BufRead *.bash* setf sh
-
   " Makefile
   au! BufNewFile,BufRead Makefile setf makefile
 
@@ -39,11 +36,14 @@ augroup filetypedetect
   au! BufNewFile,BufRead *.txt setf asciidoc
 
   " JSON
-  au! BufNewFile,BufRead *.json setf javascript
+  au! BufNewFile,BufRead *.js,*.json setf javascript
 
   " Citrus
   au! BufNewFile,BufRead *.citrus setf citrus
 
   " Toml
   au! BufNewFile,BufRead *.toml setf toml
+
+  " Scripts and Bash files
+  au! BufNewFile,BufRead *.bash*, ~/bash/* setf sh
 augroup END
