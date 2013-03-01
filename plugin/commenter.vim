@@ -25,6 +25,8 @@ function! CommentAndUncomment()
     call CommentForC_Java()
   elseif stridx(file, ".java") != -1
     call CommentForC_Java()
+  elseif stridx(file, ".vim") != -1
+    call CommentForVim()
   endif
 endfunction
 
@@ -52,6 +54,15 @@ function! CommentForC_Java()
     call setline(".", substitute(s:line, "\\(\\s*\\)\/\/ ", "\\1", ""))
   elseif match(s:line, '^\s*[^\/\/]') != -1
     call setline(".", substitute(s:line, "\\(\\s*\\)", "\\1\/\/ ", ""))
+  end
+endfunction
+
+function! CommentForVim()
+  let s:line = getline(".")
+  if match(s:line, '^\s*" ') != -1
+    call setline(".", substitute(s:line, "\\(\\s*\\)\" ", "\\1", ""))
+  elseif match(s:line, '^\s*[^"]') != -1
+    call setline(".", substitute(s:line, "\\(\\s*\\)", "\\1\" ", ""))
   end
 endfunction
 

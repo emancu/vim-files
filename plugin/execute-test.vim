@@ -5,8 +5,8 @@
 function! ExecuteTest()
   let s:file = expand("%:~:.")
   let s:line = getline(".")
-  let s:exec_bin = "!env bundle exec rspec "
-  let s:exec_options = "--no-color "
+  let s:exec_bin = "!ruby -Itest "
+  let s:exec_options = ""
 
   if match(s:line, '^\s*scenario ') != -1
     let s:name = tr(substitute(s:line, '\s*scenario "\(.*\)" do\s*', "\\1", ""), ' ', '_')
