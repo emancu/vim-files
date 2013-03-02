@@ -27,6 +27,8 @@ function! CommentAndUncomment()
     call CommentForC_Java()
   elseif stridx(file, ".vim") != -1
     call CommentForVim()
+  elseif stridx(file, ".citrus") != -1
+    call CommentForRuby()
   endif
 endfunction
 
