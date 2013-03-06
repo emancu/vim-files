@@ -1,4 +1,4 @@
-:cabbr bf cd /Users/emancu/.bash
+:cabbr bash cd /Users/emancu/.bash
 :cabbr vf cd /Users/emancu/.vim
 :cabbr toml cd /Users/emancu/Code/toml-rb
 
