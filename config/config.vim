@@ -26,6 +26,14 @@ set textwidth=0
 set showtabline=2
 set laststatus=2
 
+set statusline=
+set statusline+=%<              " truncate
+set statusline+=\ %f%m%r%h%w    " relative path
+set statusline+=%=              " seperate between right- and left-aligned
+set statusline+=%([%l,%v]%)     " line and column
+set statusline+=%(\ %Y\ %)      " file type
+
+
 " Cursor line
 set cursorline
 " set cursorcolumn
@@ -34,7 +42,7 @@ set cursorline
 hi TabLine cterm=bold ctermfg=Black ctermbg=DarkGray
 hi TabLineFill cterm=bold ctermfg=Black ctermbg=DarkGray
 hi TabLineSel cterm=NONE ctermfg=White ctermbg=DarkRed
-hi StatusLine ctermfg=Gray ctermbg=Black
+hi StatusLine guifg=Black guibg=#E0D8AA ctermfg=Black ctermbg=LightYellow
 hi StatusLineNC ctermfg=DarkGray ctermbg=Black
 hi CursorLine cterm=NONE  ctermbg=23
 hi MatchParen ctermbg=Black ctermfg=DarkYellow
