@@ -1,6 +1,6 @@
 :cabbr bash cd /Users/emancu/.bash
 :cabbr vf cd /Users/emancu/.vim
-:cabbr toml cd /Users/emancu/Code/toml-rb
+:cabbr tml cd /Users/emancu/Code/toml-rb
 
 " Citrusbyte projects
 :cabbr mh cd /Users/emancu/citrusbyte/att-innovate/mhealth
