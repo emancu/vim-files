@@ -66,15 +66,6 @@ set complete=.,w,b,u
 set wildmenu
 set wildmode=list:longest
 
-" Command-T configuration
-let g:CommandTMaxDepth=10
-let g:CommandTMaxHeight=30
-let g:CommandTMatchWindowAtTop = 1
-let g:CommandTAcceptSelectionSplitMap = '<C-s>'
-let g:CommandTAcceptSelectionMap = '<C-CR>'
-let g:CommandTAcceptSelectionTabMap = '<CR>'
-
-
 set wildignore=*.png,*.jpg,*.gif,coverage/**,tmp/**,./log/**,./voxeo_utils/**,./bin/**,docs/**,*.o
 
 " Case insensitive, incremental search, manual folds, etc.
