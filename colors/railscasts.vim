@@ -37,8 +37,6 @@ if has("gui_running")
 
   " added for ComandT plugin
   highlight CommandTSelection         guifg=#E6E1DC guibg=#554433
-  " doesn't exist yet
-  "highlight CommandTMenu              guifg=#444444 guibg=#D6F5C4 gui=none
 
   " highlight SpellBad                  guifg=#990000 guibg=#000000
   highlight Comment                   guifg=#666666 gui=italic
