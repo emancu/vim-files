@@ -7,7 +7,7 @@ set ts=2
 call IMAP('def--', "def <++>\n<++>\nend", 'ruby')
 call IMAP('do--', "do |<++>|\n<++>\nend", 'ruby')
 call IMAP('{--', "{ |<++>| <++> }", 'ruby')
-call IMAP('deb--', "require 'ruby-debug'; debugger", 'ruby')
+call IMAP('deb--', "require 'pry'; binding.pry", 'ruby')
 call IMAP('""', "\"<++>\"", 'ruby')
 call IMAP("''", "'<++>'", 'ruby')
 call IMAP('()', "\(<++>\)", 'ruby')
