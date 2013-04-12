@@ -21,4 +21,5 @@ colorscheme jellybeans
 syn sync minlines=50
 
 " Load common settings
+source ~/.vim/abbreviations.vim
 source ~/.vim/config/config.vim
