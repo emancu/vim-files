@@ -19,7 +19,7 @@ map <F5> <ESC>:'<,'>Gist -p<CR>
 map <S-F5> <ESC>:Gist -p<CR>
 
 " Execute files with Ruby 1.9
-map <F6> <ESC>Odebugger<ESC>j:w<CR>
+map <F6> <ESC>Orequire 'pry'; binding.pry<ESC>j:w<CR>
 map <S-F6> <ESC>Oputs "*" * 80<ESC>j:w<CR>
 
 " F7 is mapped to open snippets
