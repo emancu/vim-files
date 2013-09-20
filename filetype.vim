@@ -26,7 +26,7 @@ augroup filetypedetect
   au! BufNewFile,BufRead *.markdown,*.md setf markdown
 
   " Ruby
-  au! BufNewFile,BufRead *.rb,*.rbw,*.gem,*.ru,*.thor,Thorfile,Rakefile setf ruby
+  au! BufNewFile,BufRead *.rb,*.rbw,*.gem,*.ru,*.thor,Thorfile,Rakefile,*.rabl setf ruby
 
   " Sass files
   au! BufNewFile,BufRead *.sass setf sass
