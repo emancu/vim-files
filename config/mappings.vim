@@ -36,6 +36,8 @@ map <F9> <ESC>*
 map <F10> :set hlsearch!<CR>
 imap <F10> <ESC>:set hlsearch!<CR>a
 
+map <S-F10> :call HighlightOverlength() <CR>
+
 " Handle trailing whitespaces and tabs.
 map <F11> <ESC>:%s/\s*$//g<CR>:%s/\t/  /<CR>
 
