@@ -12,7 +12,7 @@ And backup your configuration files:
 
 Now clone this repository:
 
-    git clone git://github.com/eMancu/vim-files.git ~/.vim
+    git clone git://github.com/emancu/vim-files.git ~/.vim
 
 In your `~/.vimrc` put this:
 
