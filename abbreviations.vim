@@ -4,5 +4,5 @@
 
 " Citrusbyte projects
 :cabbr mh cd /Users/emancu/citrusbyte/mhealth
-:cabbr mapi cd /Users/emancu/citrusbyte/api
+:cabbr mapi cd /Users/emancu/citrusbyte/api-server
 :cabbr api cd /Users/emancu/citrusbyte/apihub
