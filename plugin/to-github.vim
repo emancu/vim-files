@@ -2,6 +2,7 @@
 " https://github.com/mattn/gist-vim
 " Big thank you. Open source ftw
 "
+
 function! s:get_browser_command()
   let gist_browser_command = get(g:, 'gist_browser_command', '')
   if gist_browser_command == ''
@@ -43,9 +44,18 @@ function! s:open_browser(url)
 endfunction
 
 function! s:run(...)
-    let command = join(a:000, ' | ')
+  let command = join(a:000, ' | ')
+  return substitute(system(command), "\n", '', '')
+endfunction
 
-    return substitute(system(command), "\n", '', '')
+function! s:copy_to_clipboard(url)
+  if exists('g:to_github_clip_command')
+    call system(g:gist_clip_command, a:url)
+  elseif has('unix') && !has('xterm_clipboard')
+    let @" = a:url
+  else
+    let @+ = a:url
+  endif
 endfunction
 
 function! ToGithub(count, line1, line2, ...)
@@ -81,7 +91,12 @@ function! ToGithub(count, line1, line2, ...)
     let line = '#L' . a:line1 . '-L' . a:line2
   endif
 
-  return s:open_browser(url . line)
+  if get(g:, 'to_github_clipboard', 0)
+    return s:copy_to_clipboard(url . line)
+  else
+    return s:open_browser(url . line)
+  endif
 endfunction
 
 command! -nargs=* -range ToGithub :call ToGithub(<count>, <line1>, <line2>, <f-args>)
+
