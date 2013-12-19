@@ -29,6 +29,8 @@ function! CommentAndUncomment()
     call CommentForVim()
   elseif stridx(file, ".citrus") != -1
     call CommentForRuby()
+  elseif stridx(file, ".sh") != -1
+    call CommentForRuby()
   endif
 endfunction
 
