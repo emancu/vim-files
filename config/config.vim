@@ -18,6 +18,7 @@ set spellsuggest=5
 
 " Tabs management
 set expandtab
+autocmd FileType make setlocal noexpandtab
 set shiftwidth=2
 set softtabstop=2
 set tabstop=2

@@ -5,7 +5,7 @@ endif
 augroup filetypedetect
 
   " Makefile
-  au! BufNewFile,BufRead Makefile setf makefile
+  au! BufNewFile,BufRead Makefile,makefile setf make
 
   " C language
   au! BufNewFile,BufRead *.c setf c
