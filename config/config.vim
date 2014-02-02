@@ -67,7 +67,7 @@ set complete=.,w,b,u
 set wildmenu
 set wildmode=list:longest
 
-set wildignore=*.png,*.jpg,*.gif,coverage/**,tmp/**,./log/**,./voxeo_utils/**,./bin/**,docs/**,*.o
+set wildignore=*.png,*.jpg,*.gif,coverage/**,tmp/**,log/**,./voxeo_utils/**,./bin/**,docs/**,*.o,vendor/**
 
 " Case insensitive, incremental search, manual folds, etc.
 set nocompatible
