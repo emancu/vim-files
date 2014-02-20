@@ -31,6 +31,9 @@ augroup filetypedetect
   " Sass files
   au! BufNewFile,BufRead *.sass setf sass
 
+  " Go files
+  au! BufNewFile,BufRead *.go setf go
+
   " AsciiDoc
   au! FileType markdown,asciidoc setlocal spell
   au! BufNewFile,BufRead *.txt setf asciidoc
