@@ -1,7 +1,7 @@
 " Backspace behavior
 set backspace=indent,eol,start
 
-set re=1
+silent! set re=1
 " Try something to colorize vim and save timeo
 " http://www.eecs.harvard.edu/~cduan/technical/vi/vi-4.shtml
 "syn sync fromstart
