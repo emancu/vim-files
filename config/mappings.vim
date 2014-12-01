@@ -122,3 +122,7 @@ map <C-m> <C-w>\|<C-w>_
 " restores with <C-w>= or pressing enter
 
 command! W w
+
+" Move visual block
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
