@@ -4,21 +4,21 @@
 "
 
 function! s:get_browser_command()
-  let gist_browser_command = get(g:, 'gist_browser_command', '')
-  if gist_browser_command == ''
+  let to_github_browser_command = get(g:, 'to_github_browser_command', '')
+  if to_github_browser_command == ''
     if has('win32') || has('win64')
-      let gist_browser_command = '!start rundll32 url.dll,FileProtocolHandler %URL%'
+      let to_github_browser_command = '!start rundll32 url.dll,FileProtocolHandler %URL%'
     elseif has('mac') || has('macunix') || has('gui_macvim') || system('uname') =~? '^darwin'
-      let gist_browser_command = 'open %URL%'
+      let to_github_browser_command = 'open %URL%'
     elseif executable('xdg-open')
-      let gist_browser_command = 'xdg-open %URL%'
+      let to_github_browser_command = 'xdg-open %URL%'
     elseif executable('firefox')
-      let gist_browser_command = 'firefox %URL% &'
+      let to_github_browser_command = 'firefox %URL% &'
     else
-      let gist_browser_command = ''
+      let to_github_browser_command = ''
     endif
   endif
-  return gist_browser_command
+  return to_github_browser_command
 endfunction
 
 function! s:open_browser(url)
@@ -50,7 +50,7 @@ endfunction
 
 function! s:copy_to_clipboard(url)
   if exists('g:to_github_clip_command')
-    call system(g:gist_clip_command, a:url)
+    call system(g:to_github_clip_command, a:url)
   elseif has('unix') && !has('xterm_clipboard')
     let @" = a:url
   else
@@ -60,7 +60,7 @@ endfunction
 
 function! ToGithub(count, line1, line2, ...)
   let github_url = 'https://github.com'
-  let get_remote = 'git remote -v | grep -E "origin.*\(fetch\)"'
+  let get_remote = 'git remote -v | grep -E "github\.com.*\(fetch\)" | head -n 1'
   let get_username = 'sed -E "s/.*com[:\/](.*)\/.*/\\1/"'
   let get_repo = 'sed -E "s/.*com[:\/].*\/(.*).*/\\1/" | cut -d " " -f 1'
   let optional_ext = 'sed -E "s/\.git//"'
@@ -79,12 +79,12 @@ function! ToGithub(count, line1, line2, ...)
     return 'Too many arguments'
   endif
 
-  " Get the branch and path, and form the complete url.
-  let branch = s:run('git symbolic-ref --short HEAD')
+  " Get the commit and path, and form the complete url.
+  let commit = s:run('git show-ref --hash HEAD')
   let repo_root = s:run('git rev-parse --show-toplevel')
   let file_path = bufname('%')
   let file_path = substitute(file_path, repo_root . '/', '', 'e')
-  let url = join([github_url, username, repo, 'blob', branch, file_path], '/')
+  let url = join([github_url, username, repo, 'blob', commit, file_path], '/')
 
   " Finally set the line numbers if necessary.
   if a:count == -1
@@ -101,4 +101,3 @@ function! ToGithub(count, line1, line2, ...)
 endfunction
 
 command! -nargs=* -range ToGithub :call ToGithub(<count>, <line1>, <line2>, <f-args>)
-
