@@ -31,6 +31,10 @@ function! CommentAndUncomment()
     call CommentForRuby()
   elseif stridx(file, ".sh") != -1
     call CommentForRuby()
+  elseif stridx(file, ".hs") != -1
+    call CommentForHaskell()
+  elseif stridx(file, ".ex") != -1
+    call CommentForRuby()
   endif
 endfunction
 
@@ -49,6 +53,15 @@ function! CommentForRuby()
     call setline(".", substitute(s:line, "\\(\\s*\\)# ", "\\1", ""))
   elseif match(s:line, '^\s*[^#]') != -1
     call setline(".", substitute(s:line, "\\(\\s*\\)", "\\1# ", ""))
+  end
+endfunction
+
+function! CommentForHaskell()
+  let s:line = getline(".")
+  if match(s:line, '^\s*-- ') != -1
+    call setline(".", substitute(s:line, "\\(\\s*\\)-- ", "\\1", ""))
+  elseif match(s:line, '^\s*[^--]') != -1
+    call setline(".", substitute(s:line, "\\(\\s*\\)", "\\1-- ", ""))
   end
 endfunction
 

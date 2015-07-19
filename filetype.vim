@@ -16,6 +16,9 @@ augroup filetypedetect
   " Haml xHTML Abstraction Markup Language
   au! BufNewFile,BufRead *.haml setf haml
 
+  " Haskell
+  au! BufNewFile,BufRead *.hs setf haskell
+
   " Mote
   au! BufNewFile,BufRead *.mote setf mote
 
