@@ -13,6 +13,8 @@ function! CommentAndUncomment()
     call CommentForHTML()
   elseif stridx(file, ".html") != -1
     call CommentForHTML()
+  elseif stridx(file, ".cr") != -1
+    call CommentForRuby()
   elseif stridx(file, ".c") != -1
     call CommentForC_Java()
   elseif stridx(file, ".h") != -1
