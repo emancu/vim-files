@@ -253,5 +253,5 @@ if main_syntax == 'javascript'
   unlet main_syntax
 endif
 
-" vim: ts=4
+" vim: ts=2
 

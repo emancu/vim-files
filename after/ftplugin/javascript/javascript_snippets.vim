@@ -1,6 +1,6 @@
 set et
-set sw=4
-set ts=4
+set sw=2
+set ts=2
 
 call IMAP('""', "\"<++>\"", 'javascript')
 call IMAP("''", "'<++>'", 'javascript')
@@ -8,4 +8,5 @@ call IMAP('()', "\(<++>\)", 'javascript')
 call IMAP('[]', "\[<++>\]", 'javascript')
 call IMAP('{}', "\{<++>\}", 'javascript')
 call IMAP('$$', "\$\(<++>\)", 'javascript')
-call IMAP("log-", "console.log('<++>')", 'javascript')
+call IMAP("log-", "console.log(<++>)", 'javascript')
+call IMAP("it--", 'it("<++>", function () {\n<++>})', 'javascript')
