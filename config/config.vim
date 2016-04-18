@@ -1,3 +1,6 @@
+scriptencoding utf-8
+set fileencoding=utf-8
+
 " Basic settings
 syntax on
 filetype on
