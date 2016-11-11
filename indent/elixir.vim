@@ -1,118 +1,69 @@
-" Vim indent file
-" Language: Elixir
-" Maintainer: Carlos Galdino <carloshsgaldino@gmail.com>
-" Last Change: 2013 Apr 24
-
-if exists("b:did_indent")
-  finish
-endif
-let b:did_indent = 1
-
 setlocal nosmartindent
-
-setlocal indentexpr=GetElixirIndent()
+setlocal indentexpr=elixir#indent()
+setlocal indentkeys+=0),0],0=\|>,=->
 setlocal indentkeys+=0=end,0=else,0=match,0=elsif,0=catch,0=after,0=rescue
 
-if exists("*GetElixirIndent")
+if exists("b:did_indent") || exists("*elixir#indent")
   finish
-endif
+end
+let b:did_indent = 1
 
 let s:cpo_save = &cpo
 set cpo&vim
 
-let s:skip_syntax  = '\%(Comment\|String\)$'
-let s:block_skip   = "synIDattr(synID(line('.'),col('.'),1),'name') =~? '" . s:skip_syntax . "'"
-let s:block_start  = 'do\|fn'
-let s:block_middle = 'else\|match\|elsif\|catch\|after\|rescue'
-let s:block_end    = 'end'
-let s:symbols_end  = '\]\|}'
-let s:arrow        = '^.*->$'
-let s:pipeline     = '^\s*|>.*$'
+function! elixir#indent()
+  " initiates the `old_ind` dictionary
+  let b:old_ind = get(b:, 'old_ind', {})
+  " initialtes the `line` dictionary
+  let line = s:build_line(v:lnum)
 
-let s:indent_keywords   = '\<\%(' . s:block_start . '\|' . s:block_middle . '\)$' . '\|' . s:arrow
-let s:deindent_keywords = '^\s*\<\%(' . s:block_end . '\|' . s:block_middle . '\)\>' . '\|' . s:arrow
-
-function! GetElixirIndent()
-  let lnum = prevnonblank(v:lnum - 1)
-  let ind  = indent(lnum)
-
-  " At the start of the file use zero indent.
-  if lnum == 0
+  if s:is_beginning_of_file(line)
+    " Reset `old_ind` dictionary at the beginning of the file
+    let b:old_ind = {}
+    " At the start of the file use zero indent.
     return 0
-  endif
+  elseif !s:is_indentable_line(line)
+    " Keep last line indentation if the current line does not have an
+    " indentable syntax
+    return indent(line.last.num)
+  else
+    " Calculates the indenation level based on the rules
+    " All the rules are defined in `autoload/indent.vim`
+    let ind = indent(line.last.num)
+    let ind = elixir#indent#deindent_case_arrow(ind, line)
+    let ind = elixir#indent#indent_parenthesis(ind, line)
+    let ind = elixir#indent#indent_square_brackets(ind, line)
+    let ind = elixir#indent#indent_brackets(ind, line)
+    let ind = elixir#indent#deindent_opened_symbols(ind, line)
+    let ind = elixir#indent#indent_pipeline_assignment(ind, line)
+    let ind = elixir#indent#indent_pipeline_continuation(ind, line)
+    let ind = elixir#indent#indent_after_pipeline(ind, line)
+    let ind = elixir#indent#indent_assignment(ind, line)
+    let ind = elixir#indent#indent_ending_symbols(ind, line)
+    let ind = elixir#indent#indent_keywords(ind, line)
+    let ind = elixir#indent#deindent_keywords(ind, line)
+    let ind = elixir#indent#deindent_ending_symbols(ind, line)
+    let ind = elixir#indent#indent_case_arrow(ind, line)
+    return ind
+  end
+endfunction
 
-  " TODO: Remove these 2 lines
-  " I don't know why, but for the test on spec/indent/lists_spec.rb:24.
-  " Vim is making some mess on parsing the syntax of 'end', it is being
-  " recognized as 'elixirString' when should be recognized as 'elixirBlock'.
-  " This forces vim to sync the syntax.
-  call synID(v:lnum, 1, 1)
-  syntax sync fromstart
+function! s:is_beginning_of_file(line)
+  return a:line.last.num == 0
+endfunction
 
-  if synIDattr(synID(v:lnum, 1, 1), "name") !~ s:skip_syntax
-    let current_line = getline(v:lnum)
-    let last_line = getline(lnum)
+function! s:is_indentable_line(line)
+  return elixir#util#is_indentable_at(a:line.current.num, 1)
+endfunction
 
-    let splited_line = split(last_line, '\zs')
-    let opened_symbol = 0
-    let opened_symbol += count(splited_line, '[') - count(splited_line, ']')
-    let opened_symbol += count(splited_line, '{') - count(splited_line, '}')
+function! s:build_line(line)
+  let line = { 'current': {}, 'last': {} }
+  let line.current.num = a:line
+  let line.current.text = getline(line.current.num)
+  let line.last.num = prevnonblank(line.current.num - 1)
+  let line.last.text = getline(line.last.num)
 
-    let ind += opened_symbol * &sw
-
-    if last_line =~ '^\s*\(' . s:symbols_end . '\)'
-      let ind += &sw
-    endif
-
-    if current_line =~ '^\s*\(' . s:symbols_end . '\)'
-      let ind -= &sw
-    endif
-
-    if last_line =~ s:indent_keywords
-      let ind += &sw
-    endif
-
-    " if line starts with pipeline
-    " and last line contains pipeline(s)
-    " align them
-    if last_line =~ '|>.*$' &&
-          \ current_line =~ s:pipeline
-      let ind = float2nr(match(last_line, '|>') / &sw) * &sw
-
-    " if line starts with pipeline
-    " and last line is an attribution
-    " indents pipeline in same level as attribution
-    elseif current_line =~ s:pipeline &&
-          \ last_line =~ '^[^=]\+=.\+$'
-      let b:old_ind = ind
-      let ind = float2nr(matchend(last_line, '=\s*[^ ]') / &sw) * &sw
-    endif
-
-    " if last line starts with pipeline
-    " and current line doesn't start with pipeline
-    " returns the indentation before the pipeline
-    if last_line =~ s:pipeline &&
-          \ current_line !~ s:pipeline
-      let ind = b:old_ind
-    endif
-
-    if current_line =~ s:deindent_keywords
-      let bslnum = searchpair( '\<\%(' . s:block_start . '\):\@!\>',
-            \ '\<\%(' . s:block_middle . '\):\@!\>\zs',
-            \ '\<:\@<!' . s:block_end . '\>\zs',
-            \ 'nbW',
-            \ s:block_skip )
-
-      let ind = indent(bslnum)
-    endif
-
-    " indent case statements '->'
-    if current_line =~ s:arrow
-      let ind += &sw
-    endif
-  endif
-
-  return ind
+  return line
 endfunction
 
 let &cpo = s:cpo_save
