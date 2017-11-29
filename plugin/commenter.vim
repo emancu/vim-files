@@ -37,6 +37,8 @@ function! CommentAndUncomment()
     call CommentForHaskell()
   elseif stridx(file, ".ex") != -1
     call CommentForRuby()
+  elseif stridx(file, ".jl") != -1
+    call CommentForRuby()
   endif
 endfunction
 
