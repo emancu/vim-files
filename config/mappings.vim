@@ -9,10 +9,10 @@ map <S-F2> :MRU <CR>
 map <F3> :Vex <CR>3i
 
 " Execute tests
-" -Run actual scenario TODO: do generic for other test plugins
-map <F4> <ESC>:call ExecuteTest()<CR>
 " I use / instead of ? because I need to search next in normal order.
-map <S-F4> <ESC>/scenario\\|it <CR>N:call ExecuteTest()<CR>
+map <F4> <ESC>/scenario\\|it \\|def test_<CR>N:call ExecuteTest()<CR>
+" -Run actual scenario TODO: do generic for other test plugins
+map <S-F4> <ESC>:call ExecuteTest()<CR>
 
 " Create a gist with the selection
 map <F5> <ESC>:'<,'>Gist -p<CR>
@@ -127,3 +127,7 @@ command! W w
 " Move visual block
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
+
+" Keep selected text selected when fixing indentation
+vnoremap < <gv
+vnoremap > >gv

@@ -15,6 +15,7 @@ call IMAP('()', "\(<++>\)", 'ruby')
 call IMAP('[]', "\[<++>\]", 'ruby')
 call IMAP('{}', "\{<++>\}", 'ruby')
 call IMAP('=.', " => ", 'ruby')
+call IMAP('lit--', "# frozen_string_literal: true", 'ruby')
 
 " Tests
 call IMAP('Test--', "class Test<++> < Test::Unit::TestCase\n<++>\nend", 'ruby')
