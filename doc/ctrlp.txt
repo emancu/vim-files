@@ -1,4 +1,4 @@
-*ctrlp.txt*       Fuzzy file, buffer, mru, tag, ... finder. v1.79
+*ctrlp.txt*       Fuzzy file, buffer, mru, tag, ... finder. v1.80
 *CtrlP* *ControlP* *'ctrlp'* *'ctrl-p'*
 ===============================================================================
 #                                                                             #
@@ -638,7 +638,6 @@ Set this to 1 to save every MRU file path $HOME/$filepath in the $HOME dir
   let g:ctrlp_tilde_homedir = 0
 <
 Note: This applies also to all dir paths stored by :CtrlPBookmarkDirAdd!
-<
 
                                                       *'g:ctrlp_mruf_relative'*
 Set this to 1 to show only MRU files in the current working directory: >
@@ -848,7 +847,7 @@ Example: >
 When this is set to 1, the <bs> on empty prompt exit CtrlP.
 
                                                           *ctrlp-default-value*
-Otherwize, you can use below to change default value.
+Otherwise, you can use below to change default value.
 Example: >
   let g:ctrlp_path_nolim = 1
 
@@ -873,12 +872,12 @@ COMMANDS                                                       *ctrlp-commands*
 
                                                                 *:CtrlPCurFile*
 :CtrlPCurFile
-    This acts like |:CtrlP| with |g:ctrlp_working_path_mode| = '' and ignores
+    This acts like |:CtrlP| with |g:ctrlp_working_path_mode| = 'c' and ignores
     the variable's current value.
 
                                                                   *:CtrlPCurWD*
 :CtrlPCurWD
-    This acts like |:CtrlP| with |g:ctrlp_working_path_mode| = '' and ignores
+    This acts like |:CtrlP| with |g:ctrlp_working_path_mode| = 'd' and ignores
     the variable's current value.
 
                                                                     *:CtrlPMRU*

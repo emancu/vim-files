@@ -439,6 +439,14 @@ fu! ctrlp#addfile(ch, file)
 	cal s:BuildPrompt(1)
 endf
 
+fu! s:safe_printf(format, ...)
+	try
+		retu call('printf', [a:format] + a:000)
+	cat
+		retu a:format
+	endt
+endf
+
 fu! s:UserCmd(lscmd)
 	let [path, lscmd] = [s:dyncwd, a:lscmd]
 	let do_ign =
@@ -461,9 +469,9 @@ fu! s:UserCmd(lscmd)
 		let g:ctrlp_allfiles = []
 		let s:job = job_start([&shell, &shellcmdflag, printf(lscmd, path)], {'callback': 'ctrlp#addfile'})
 	elsei has('patch-7.4-597') && !(has('win32') || has('win64'))
-		let g:ctrlp_allfiles = systemlist(printf(lscmd, path))
+		let g:ctrlp_allfiles = systemlist(s:safe_printf(lscmd, path))
 	el
-		let g:ctrlp_allfiles = split(system(printf(lscmd, path)), "\n")
+		let g:ctrlp_allfiles = split(system(s:safe_printf(lscmd, path)), "\n")
 	en
 	if exists('+ssl') && exists('ssl')
 		let &ssl = ssl
@@ -569,9 +577,14 @@ endf
 fu! s:MatchedItems(items, pat, limit)
 	let exc = exists('s:crfilerel') ? s:crfilerel : ''
 	let items = s:narrowable() ? s:matched + s:mdata[3] : a:items
-	if s:matcher != {}
+	let matcher = s:getextvar('matcher')
+	if empty(matcher) || type(matcher) != 4 || !has_key(matcher, 'match')
+		unlet matcher
+		let matcher = s:matcher
+	en
+	if matcher != {}
 		let argms =
-			\ has_key(s:matcher, 'arg_type') && s:matcher['arg_type'] == 'dict' ? [{
+			\ has_key(matcher, 'arg_type') && matcher['arg_type'] == 'dict' ? [{
 			\ 'items':  items,
 			\ 'str':    a:pat,
 			\ 'limit':  a:limit,
@@ -580,7 +593,7 @@ fu! s:MatchedItems(items, pat, limit)
 			\ 'crfile': exc,
 			\ 'regex':  s:regexp,
 			\ }] : [items, a:pat, a:limit, s:mmode(), s:ispath, exc, s:regexp]
-		let lines = call(s:matcher['match'], argms, s:matcher)
+		let lines = call(matcher['match'], argms, matcher)
 	el
 		let lines = s:MatchIt(items, a:pat, a:limit, exc)
 	en
@@ -1001,7 +1014,9 @@ fu! s:KeyLoop()
 	wh exists('s:init') && s:keyloop
 		try
 			set t_ve=
-			set guicursor=a:NONE
+			if guicursor != ''
+				set guicursor=a:NONE
+			en
 			let nr = getchar()
 		fina
 			let &t_ve = t_ve
@@ -1196,7 +1211,7 @@ fu! s:AcceptSelection(action)
 			let type = exttype == 'dict' ? exttype : 'list'
 		en
 	en
-	let actargs = type == 'dict' ? [{ 'action': md, 'line': line, 'icr': icr }]
+	let actargs = type == 'dict' ? [{ 'action': md, 'line': line, 'icr': icr, 'input': str}]
 		\ : [md, line]
 	cal call(actfunc, actargs)
 endf
@@ -1763,6 +1778,7 @@ fu! ctrlp#setpathmode(pmode, ...)
 		let spath = a:0 ? a:1 : s:crfpath
 		let markers = ['.git', '.hg', '.svn', '.bzr', '_darcs']
 		if type(s:rmarkers) == 3 && !empty(s:rmarkers)
+			if s:findroot(spath, s:rmarkers, 0, 0) != [] | retu 1 | en
 			cal filter(markers, 'index(s:rmarkers, v:val) < 0')
 			let markers = s:rmarkers + markers
 		en
@@ -1872,6 +1888,11 @@ fu! s:highlight(pat, grp)
 		en
 
 		cal matchadd('CtrlPLinePre', '^>')
+	elseif !empty(a:pat) && s:regexp &&
+				\ exists('g:ctrlp_regex_always_higlight') &&
+				\ g:ctrlp_regex_always_higlight
+		let pat = substitute(a:pat, '\\\@<!\^', '^> \\zs', 'g')
+		cal matchadd(a:grp, ( s:martcs == '' ? '\c' : '\C').pat)
 	en
 endf
 
@@ -1998,7 +2019,7 @@ fu! s:bufnrfilpath(line)
 		if (a:line =~ '[\/]\?\[\d\+\*No Name\]$')
 			let bufnr = str2nr(matchstr(a:line, '[\/]\?\[\zs\d\+\ze\*No Name\]$'))
 			let filpath = bufnr
-		else
+		els
 			let bufnr = bufnr(a:line)
 			retu [bufnr, a:line]
 		en
@@ -2304,7 +2325,7 @@ fu! s:lastvisual()
 	let cview = winsaveview()
 	let [ovreg, ovtype] = [getreg('v'), getregtype('v')]
 	let [oureg, outype] = [getreg('"'), getregtype('"')]
-	sil! norm! gv"vy
+	sil! norm! gV"vy
 	let selected = s:regisfilter('v')
 	cal setreg('v', ovreg, ovtype)
 	cal setreg('"', oureg, outype)
@@ -2384,7 +2405,7 @@ endf
 fu! s:matchbuf(item, pat)
 	let bufnr = s:bufnrfilpath(a:item)[0]
 	let parts = s:bufparts(bufnr)
-	let item = bufnr.parts[0].parts[2].s:lash().parts[3]
+	let item = s:byfname ? parts[2] : bufnr.parts[0].parts[2].s:lash().parts[3]
 	retu match(item, a:pat)
 endf
 
@@ -2403,7 +2424,7 @@ fu! s:buildpat(lst)
 			let c = a:lst[item - 1]
 			let pat .= (c == '/' ? '[^/]\{-}' : '[^'.c.'/]\{-}').a:lst[item]
 		endfo
-	else
+	els
 		for item in range(1, len(a:lst) - 1)
 			let pat .= '[^'.a:lst[item - 1].']\{-}'.a:lst[item]
 		endfo
@@ -2493,7 +2514,9 @@ endf
 fu! s:getextvar(key)
 	if s:itemtype >= len(s:coretypes) && len(g:ctrlp_ext_vars) > 0
 		let vars = g:ctrlp_ext_vars[s:itemtype - len(s:coretypes)]
-		retu has_key(vars, a:key) ? vars[a:key] : -1
+		if has_key(vars, a:key)
+			retu vars[a:key]
+		en
 	en
 	retu get(g:, 'ctrlp_' . s:matchtype . '_' . a:key, -1)
 endf
