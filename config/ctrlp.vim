@@ -6,7 +6,7 @@ let g:ctrlp_max_depth             = 20
 let g:ctrlp_max_height            = 20
 let g:ctrlp_max_files             = 5000
 let g:ctrlp_max_history           = 0
-let g:ctrlp_custom_ignore         = '\v[\/](\.git|\.svn|log|tmp|vendor|_build|deps|node_modules)$'
+let g:ctrlp_custom_ignore         = '\v[\/](\.git|\.svn|log|tmp|vendor|_build|deps|node_modules|elm-stuff)$'
 
 let g:ctrlp_prompt_mappings = {
   \ 'AcceptSelection("e")': ['<c-cr>'],
