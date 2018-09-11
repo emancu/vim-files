@@ -4,11 +4,13 @@ set encoding=utf-8
 " Backspace behavior
 set backspace=indent,eol,start
 
+set guioptions-=r " Removes right hand scroll bar
+
 silent! set re=1
 " Try something to colorize vim and save timeo
 " http://www.eecs.harvard.edu/~cduan/technical/vi/vi-4.shtml
 "syn sync fromstart
-syn sync minlines=20
+syn sync minlines=50
 
 " Color settings
 set t_Co=256
