@@ -1,109 +1,97 @@
-let s:jobs = {}
-" Async broken on MacVim in GUI mode:
-" https://github.com/macvim-dev/macvim/issues/272
-let s:available = has('nvim') || (has('patch-7-4-1791') && !(has('gui_macvim') && has('gui_running')))
+let s:available = has('nvim') || (
+      \   has('job') && (
+      \     (has('patch-7-4-1826') && !has('gui_running')) ||
+      \     (has('patch-7-4-1850') &&  has('gui_running')) ||
+      \     (has('patch-7-4-1832') &&  has('gui_macvim'))
+      \   )
+      \ )
 
 function! gitgutter#async#available()
   return s:available
 endfunction
 
-function! gitgutter#async#execute(cmd)
+
+function! gitgutter#async#execute(cmd, bufnr, handler) abort
+  call gitgutter#debug#log('[async] '.a:cmd)
+
+  let options = {
+        \   'stdoutbuffer': [],
+        \   'buffer': a:bufnr,
+        \   'handler': a:handler
+        \ }
+  let command = s:build_command(a:cmd)
+
   if has('nvim')
-    let job_id = jobstart([&shell, &shellcmdflag, a:cmd], {
-          \ 'on_stdout': function('gitgutter#async#handle_diff_job_nvim'),
-          \ 'on_stderr': function('gitgutter#async#handle_diff_job_nvim'),
-          \ 'on_exit':   function('gitgutter#async#handle_diff_job_nvim')
+    call jobstart(command, extend(options, {
+          \   'on_stdout': function('s:on_stdout_nvim'),
+          \   'on_stderr': function('s:on_stderr_nvim'),
+          \   'on_exit':   function('s:on_exit_nvim')
+          \ }))
+  else
+    call job_start(command, {
+          \   'out_cb':   function('s:on_stdout_vim', options),
+          \   'err_cb':   function('s:on_stderr_vim', options),
+          \   'close_cb': function('s:on_exit_vim', options)
           \ })
-    call gitgutter#debug#log('[nvim job: '.job_id.'] '.a:cmd)
-    if job_id < 1
-      throw 'diff failed'
+  endif
+endfunction
+
+
+function! s:build_command(cmd)
+  if has('unix')
+    return ['sh', '-c', a:cmd]
+  endif
+
+  if has('win32')
+    return has('nvim') ? ['cmd.exe', '/c', a:cmd] : 'cmd.exe /c '.a:cmd
+  endif
+
+  throw 'unknown os'
+endfunction
+
+
+function! s:on_stdout_nvim(_job_id, data, _event) dict abort
+  if empty(self.stdoutbuffer)
+    let self.stdoutbuffer = a:data
+  else
+    let self.stdoutbuffer = self.stdoutbuffer[:-2] +
+          \ [self.stdoutbuffer[-1] . a:data[0]] +
+          \ a:data[1:]
+  endif
+endfunction
+
+function! s:on_stderr_nvim(_job_id, data, _event) dict abort
+  if a:data != ['']  " With Neovim there is always [''] reported on stderr.
+    call self.handler.err(self.buffer)
+  endif
+endfunction
+
+function! s:on_exit_nvim(_job_id, exit_code, _event) dict abort
+  if !a:exit_code
+    call self.handler.out(self.buffer, join(self.stdoutbuffer, "\n"))
+  endif
+endfunction
+
+
+function! s:on_stdout_vim(_channel, data) dict abort
+  call add(self.stdoutbuffer, a:data)
+endfunction
+
+function! s:on_stderr_vim(channel, _data) dict abort
+  call self.handler.err(self.buffer)
+endfunction
+
+function! s:on_exit_vim(channel) dict abort
+  let job = ch_getjob(a:channel)
+  while 1
+    if job_status(job) == 'dead'
+      let exit_code = job_info(job).exitval
+      break
     endif
+    sleep 5m
+  endwhile
 
-    " Note that when `cmd` doesn't produce any output, i.e. the diff is empty,
-    " the `stdout` event is not fired on the job handler.  Therefore we keep
-    " track of the jobs ourselves so we can spot empty diffs.
-    call s:job_started(job_id)
-
-  else
-    " Pass a handler for stdout but not for stderr so that errors are
-    " ignored (and thus signs are not updated; this assumes that an error
-    " only occurs when a file is not tracked by git).
-    let job = job_start([&shell, &shellcmdflag, a:cmd], {
-          \ 'out_cb': 'gitgutter#async#handle_diff_job_vim'
-          \ })
-          " \ 'close_cb': 'gitgutter#handle_diff_job_vim_close'
-    call gitgutter#debug#log('[vim job: '.string(job_info(job)).'] '.a:cmd)
-  endif
-endfunction
-
-
-function! gitgutter#async#handle_diff_job_nvim(job_id, data, event)
-  call gitgutter#debug#log('job_id: '.a:job_id.', event: '.a:event)
-
-  if a:event == 'stdout'
-    " a:data is a list
-    call s:job_finished(a:job_id)
-    call gitgutter#handle_diff(gitgutter#utility#stringify(a:data))
-
-  elseif a:event == 'exit'
-    " If the exit event is triggered without a preceding stdout event,
-    " the diff was empty.
-    if s:is_job_started(a:job_id)
-      call gitgutter#handle_diff("")
-      call s:job_finished(a:job_id)
-    endif
-
-  else  " a:event is stderr
-    call gitgutter#hunk#reset()
-    call s:job_finished(a:job_id)
-
-  endif
-endfunction
-
-
-" Channel is in NL mode.
-function! gitgutter#async#handle_diff_job_vim(channel, line)
-  call gitgutter#debug#log('channel: '.a:channel.', line: '.a:line)
-
-  " This seems to be the only way to get info about the channel once closed.
-  let channel_id = matchstr(a:channel, '\d\+')
-
-  if a:line ==# 'DETACH'  " End of job output
-    call gitgutter#handle_diff(s:job_output(channel_id))
-    call s:job_finished(channel_id)
-  else
-    call s:accumulate_job_output(channel_id, a:line)
-  endif
-endfunction
-
-
-function! s:job_started(id)
-  let s:jobs[a:id] = 1
-endfunction
-
-function! s:is_job_started(id)
-  return has_key(s:jobs, a:id)
-endfunction
-
-function! s:accumulate_job_output(id, line)
-  if has_key(s:jobs, a:id)
-    let s:jobs[a:id] = add(s:jobs[a:id], a:line)
-  else
-    let s:jobs[a:id] = [a:line]
-  endif
-endfunction
-
-" Returns a string
-function! s:job_output(id)
-  if has_key(s:jobs, a:id)
-    return gitgutter#utility#stringify(s:jobs[a:id])
-  else
-    return ""
-  endif
-endfunction
-
-function! s:job_finished(id)
-  if has_key(s:jobs, a:id)
-    unlet s:jobs[a:id]
+  if !exit_code
+    call self.handler.out(self.buffer, join(self.stdoutbuffer, "\n"))
   endif
 endfunction
