@@ -4,7 +4,7 @@ let g:ctrlp_match_window_reversed = 0
 let g:ctrlp_match_window_bottom   = 0
 let g:ctrlp_max_depth             = 20
 let g:ctrlp_max_height            = 20
-let g:ctrlp_max_files             = 5000
+let g:ctrlp_max_files             = 8000
 let g:ctrlp_max_history           = 0
 let g:ctrlp_custom_ignore         = '\v[\/](\.git|\.svn|log|tmp|vendor|_build|deps|node_modules|elm-stuff)$'
 

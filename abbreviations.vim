@@ -2,10 +2,9 @@
 :cabbr vf   cd /Users/emancu/.vim
 :cabbr tml  cd /Users/emancu/Code/toml-rb
 
-" Citrusbyte projects
-:cabbr csc  cd /Users/emancu/citrusbyte/social
-:cabbr cso  cd /Users/emancu/citrusbyte/soul
 
-" Mandrula projects
-:cabbr ppb  cd /Users/emancu/pulpou/pulpou-back
-:cabbr pd   cd /Users/emancu/pulpou/pulpou_devops
+" Carwow projects
+:cabbr ds cd ~/carwow/dealers_site
+:cabbr qs cd ~/carwow/quotes_site
+:cabbr rs cd ~/carwow/research_site
+:cabbr fs cd ~/carwow/flatmin

@@ -8,7 +8,7 @@ function! CommentAndUncomment()
   elseif stridx(file, ".yml") != -1
     call CommentForRuby()
   elseif stridx(file, ".haml") != -1
-    call CommentForC_Java()
+    call CommentForHaml()
   elseif stridx(file, ".erb") != -1
     call CommentForHTML()
   elseif stridx(file, ".html") != -1
@@ -39,6 +39,8 @@ function! CommentAndUncomment()
     call CommentForRuby()
   elseif stridx(file, ".jl") != -1
     call CommentForRuby()
+  elseif stridx(file, ".elm") != -1
+    call CommentForElm()
   endif
 endfunction
 
@@ -69,6 +71,15 @@ function! CommentForHaskell()
   end
 endfunction
 
+function! CommentForHaml()
+  let s:line = getline(".")
+  if match(s:line, '^\s*- # ') != -1
+    call setline(".", substitute(s:line, "\\(\\s*\\)- # ", "\\1", ""))
+  elseif match(s:line, '^\s*[^#]') != -1
+    call setline(".", substitute(s:line, "\\(\\s*\\)", "\\1- # ", ""))
+  end
+endfunction
+
 function! CommentForC_Java()
   let s:line = getline(".")
   if match(s:line, '^\s*\/\/ ') != -1
@@ -84,6 +95,15 @@ function! CommentForVim()
     call setline(".", substitute(s:line, "\\(\\s*\\)\" ", "\\1", ""))
   elseif match(s:line, '^\s*[^"]') != -1
     call setline(".", substitute(s:line, "\\(\\s*\\)", "\\1\" ", ""))
+  end
+endfunction
+
+function! CommentForElm()
+  let s:line = getline(".")
+  if match(s:line, '^\s*-- ') != -1
+    call setline(".", substitute(s:line, "\\(\\s*\\)-- ", "\\1", ""))
+  elseif match(s:line, '^\s*[^--]') != -1
+    call setline(".", substitute(s:line, "\\(\\s*\\)", "\\1-- ", ""))
   end
 endfunction
 

@@ -20,6 +20,9 @@ colorscheme jellybeans
 
 syn sync minlines=50
 
+macm Edit.Find.Use\ Selection\ for\ Find	key=<nop> action=useSelectionForFind:
+
+
 " Load common settings
 source ~/.vim/abbreviations.vim
 source ~/.vim/config/config.vim
