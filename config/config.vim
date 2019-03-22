@@ -1,4 +1,6 @@
+" Set encodings to UTF8
 scriptencoding utf-8
+set encoding=utf-8
 set fileencoding=utf-8
 
 " Basic settings
@@ -57,10 +59,6 @@ set nobackup
 set nowritebackup
 set noswapfile
 
-" Set encodings to UTF8
-set encoding=utf-8
-set fileencoding=utf-8
-
 " Show tabs and trailing spaces toggle with F11, remove with S-F11
 set listchars=tab:⏤⇢,trail:⇢
 set list
@@ -90,3 +88,4 @@ source ~/.vim/config/gist.vim
 source ~/.vim/config/mappings.vim
 source ~/.vim/config/ctrlp.vim
 source ~/.vim/config/to-github.vim
+source ~/.vim/config/git-gutter.vim
