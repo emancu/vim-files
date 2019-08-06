@@ -10,7 +10,7 @@ silent! set re=1
 " Try something to colorize vim and save timeo
 " http://www.eecs.harvard.edu/~cduan/technical/vi/vi-4.shtml
 "syn sync fromstart
-syn sync minlines=50
+syn sync minlines=70
 
 " Color settings
 set t_Co=256

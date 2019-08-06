@@ -12,16 +12,15 @@ set titlestring=%t%(\ %M%)%(\ (%{expand(\"%:~:.:h\")})%)
 set winminheight=0
 
 " Font
-set guifont=Monaco:h12
+set guifont=Menlo:h11
 
 " Color settings
-"color railscasts
 colorscheme jellybeans
 
-syn sync minlines=50
+syn sync minlines=200
 
-macm Edit.Find.Use\ Selection\ for\ Find	key=<nop> action=useSelectionForFind:
-
+" Disable MacVim mapping for CMD+E
+macm Edit.Find.Use\ Selection\ for\ Find	key=<nop>
 
 " Load common settings
 source ~/.vim/abbreviations.vim
