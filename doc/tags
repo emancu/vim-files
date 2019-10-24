@@ -73,10 +73,6 @@
 :CtrlPUndo	ctrlp.txt	/*:CtrlPUndo*
 :Gist	gist-vim.txt	/*:Gist*
 :MatchDebug	matchit.txt	/*:MatchDebug*
-:MkVimball	pi_vimball.txt	/*:MkVimball*
-:RmVimball	pi_vimball.txt	/*:RmVimball*
-:UseVimball	pi_vimball.txt	/*:UseVimball*
-:VimballList	pi_vimball.txt	/*:VimballList*
 ClearAllCtrlPCaches	ctrlp.txt	/*ClearAllCtrlPCaches*
 ClearCtrlPCache	ctrlp.txt	/*ClearCtrlPCache*
 ControlP	ctrlp.txt	/*ControlP*
@@ -84,7 +80,6 @@ CtrlP	ctrlp.txt	/*CtrlP*
 Gist.vim	gist-vim.txt	/*Gist.vim*
 MatchError	matchit.txt	/*MatchError*
 ResetCtrlP	ctrlp.txt	/*ResetCtrlP*
-Vimball-copyright	pi_vimball.txt	/*Vimball-copyright*
 [%	matchit.txt	/*[%*
 ]%	matchit.txt	/*]%*
 b:match_col	matchit.txt	/*b:match_col*
@@ -124,8 +119,6 @@ g:ctrlp_mru_files	ctrlp.txt	/*g:ctrlp_mru_files*
 g:ctrlp_open_multi	ctrlp.txt	/*g:ctrlp_open_multi*
 g:ctrlp_persistent_input	ctrlp.txt	/*g:ctrlp_persistent_input*
 g:ctrlp_regexp_search	ctrlp.txt	/*g:ctrlp_regexp_search*
-g:vimball_home	pi_vimball.txt	/*g:vimball_home*
-g:vimball_mkdir	pi_vimball.txt	/*g:vimball_mkdir*
 gist-vim-install	gist-vim.txt	/*gist-vim-install*
 gist-vim-license	gist-vim.txt	/*gist-vim-license*
 gist-vim-requirements	gist-vim.txt	/*gist-vim-requirements*
@@ -167,7 +160,6 @@ matchit.vim	matchit.txt	/*matchit.vim*
 o_[%	matchit.txt	/*o_[%*
 o_]%	matchit.txt	/*o_]%*
 o_g%	matchit.txt	/*o_g%*
-pi_vimball.txt	pi_vimball.txt	/*pi_vimball.txt*
 surround	surround.txt	/*surround*
 surround-customizing	surround.txt	/*surround-customizing*
 surround-issues	surround.txt	/*surround-issues*
@@ -180,14 +172,7 @@ v_[%	matchit.txt	/*v_[%*
 v_]%	matchit.txt	/*v_]%*
 v_a%	matchit.txt	/*v_a%*
 v_g%	matchit.txt	/*v_g%*
-vba	pi_vimball.txt	/*vba*
 vgS	surround.txt	/*vgS*
-vimball	pi_vimball.txt	/*vimball*
-vimball-contents	pi_vimball.txt	/*vimball-contents*
-vimball-extract	pi_vimball.txt	/*vimball-extract*
-vimball-history	pi_vimball.txt	/*vimball-history*
-vimball-intro	pi_vimball.txt	/*vimball-intro*
-vimball-manual	pi_vimball.txt	/*vimball-manual*
 webapi#http#decodeURI()	webapi.txt	/*webapi#http#decodeURI()*
 webapi#http#encodeURI()	webapi.txt	/*webapi#http#encodeURI()*
 webapi#http#encodeURIComponent()	webapi.txt	/*webapi#http#encodeURIComponent()*
