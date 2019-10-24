@@ -3,7 +3,6 @@ if exists("did_load_filetypes")
 endif
 
 augroup filetypedetect
-
   " Makefile
   au! BufNewFile,BufRead Makefile,makefile setf make
 
@@ -52,4 +51,16 @@ augroup filetypedetect
 
   " Scripts and Bash files
   au! BufNewFile,BufRead *.bash*, ~/bash/* setf sh
+
+  " Elixir
+  au! BufNewFile,BufRead *.ex,*.exs setf elixir
+
+  " Rust
+  au! BufNewFile,BufRead *.rs setf rust
+
+  " julia
+  au! BufNewFile,BufRead *.jl setf julia
+
+  " crystal
+  au! BufNewFile,BufRead *.clj setf clojure
 augroup END
