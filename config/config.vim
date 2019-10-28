@@ -8,6 +8,7 @@ syntax on
 filetype on
 filetype indent on
 filetype plugin on
+set wrap
 
 " Change default mapleader to a comma
 let mapleader = ","
