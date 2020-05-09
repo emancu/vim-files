@@ -3,6 +3,8 @@ if exists('g:loaded_elm')
 endif
 
 let g:loaded_elm = 1
+let g:elm_format_autosave = 1
+
 
 " Mappings
 nnoremap <silent> <Plug>(elm-make) :<C-u>call elm#Make()<CR>

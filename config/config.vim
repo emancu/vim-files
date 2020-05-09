@@ -84,6 +84,9 @@ set number
 set incsearch
 set hlsearch
 
+set noballooneval " Disable tooltip
+set balloondelay=20000
+
 " Other files.
 source ~/.vim/config/gist.vim
 source ~/.vim/config/mappings.vim
