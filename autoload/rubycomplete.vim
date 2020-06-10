@@ -1,10 +1,8 @@
 " Vim completion script
-" Language:             Ruby
-" Maintainer:           Mark Guzman <segfault@hasno.info>
-" URL:                  https://github.com/vim-ruby/vim-ruby
-" Anon CVS:             See above site
-" Release Coordinator:  Doug Kearns <dougkearns@gmail.com>
-" Maintainer Version:   0.8.1
+" Language:		Ruby
+" Maintainer:		Mark Guzman <segfault@hasno.info>
+" URL:			https://github.com/vim-ruby/vim-ruby
+" Release Coordinator:	Doug Kearns <dougkearns@gmail.com>
 " ----------------------------------------------------------------------------
 "
 " Ruby IRB/Complete author: Keiju ISHITSUKA(keiju@ishitsuka.com)
@@ -54,6 +52,23 @@ if !exists("g:rubycomplete_include_objectspace")
 endif
 " }}} configuration failsafe initialization
 
+" {{{ regex patterns
+
+" Regex that defines the start-match for the 'end' keyword.
+let s:end_start_regex =
+      \ '\C\%(^\s*\|[=,*/%+\-|;{]\|<<\|>>\|:\s\)\s*\zs' .
+      \ '\<\%(module\|class\|if\|for\|while\|until\|case\|unless\|begin' .
+      \   '\|\%(\K\k*[!?]\?\s\+\)\=def\):\@!\>' .
+      \ '\|\%(^\|[^.:@$]\)\@<=\<do:\@!\>'
+
+" Regex that defines the middle-match for the 'end' keyword.
+let s:end_middle_regex = '\<\%(ensure\|else\|\%(\%(^\|;\)\s*\)\@<=\<rescue:\@!\>\|when\|elsif\):\@!\>'
+
+" Regex that defines the end-match for the 'end' keyword.
+let s:end_end_regex = '\%(^\|[^.:@$]\)\@<=\<end:\@!\>'
+
+" }}} regex patterns
+
 " {{{ vim-side support functions
 let s:rubycomplete_debug = 0
 
@@ -94,7 +109,7 @@ function! s:GetBufferRubyEntity( name, type, ... )
 
     let stopline = 1
 
-    let crex = '^\s*\<' . a:type . '\>\s*\<' . a:name . '\>\s*\(<\s*.*\s*\)\?'
+    let crex = '^\s*\<' . a:type . '\>\s*\<' . escape(a:name, '*') . '\>\s*\(<\s*.*\s*\)\?'
     let [lnum,lcol] = searchpos( crex, 'w' )
     "let [lnum,lcol] = searchpairpos( crex . '\zs', '', '\(end\|}\)', 'w' )
 
@@ -104,7 +119,7 @@ function! s:GetBufferRubyEntity( name, type, ... )
     endif
 
     let curpos = getpos(".")
-    let [enum,ecol] = searchpairpos( crex, '', '\(end\|}\)', 'wr' )
+    let [enum,ecol] = searchpairpos( s:end_start_regex, s:end_middle_regex, s:end_end_regex, 'W' )
     call cursor(lastpos[1], lastpos[2])
 
     if lnum > enum
@@ -129,19 +144,28 @@ function! s:IsPosInClassDef(pos)
     return ret
 endfunction
 
+function! s:IsInComment(pos)
+    let stack = synstack(a:pos[0], a:pos[1])
+    if !empty(stack)
+        return synIDattr(stack[0], 'name') =~ 'ruby\%(.*Comment\|Documentation\)'
+    else
+        return 0
+    endif
+endfunction
+
 function! s:GetRubyVarType(v)
     let stopline = 1
     let vtp = ''
-    let pos = getpos('.')
+    let curpos = getpos('.')
     let sstr = '^\s*#\s*@var\s*'.escape(a:v, '*').'\>\s\+[^ \t]\+\s*$'
     let [lnum,lcol] = searchpos(sstr,'nb',stopline)
     if lnum != 0 && lcol != 0
-        call setpos('.',pos)
+        call setpos('.',curpos)
         let str = getline(lnum)
         let vtp = substitute(str,sstr,'\1','')
         return vtp
     endif
-    call setpos('.',pos)
+    call setpos('.',curpos)
     let ctors = '\(now\|new\|open\|get_instance'
     if exists('g:rubycomplete_rails') && g:rubycomplete_rails == 1 && s:rubycomplete_rails_loaded == 1
         let ctors = ctors.'\|find\|create'
@@ -150,10 +174,14 @@ function! s:GetRubyVarType(v)
     let ctors = ctors.'\)'
 
     let fstr = '=\s*\([^ \t]\+.' . ctors .'\>\|[\[{"''/]\|%[xwQqr][(\[{@]\|[A-Za-z0-9@:\-()\.]\+...\?\|lambda\|&\)'
-    let sstr = ''.a:v.'\>\s*[+\-*/]*'.fstr
-    let [lnum,lcol] = searchpos(sstr,'nb',stopline)
-    if lnum != 0 && lcol != 0
-        let str = matchstr(getline(lnum),fstr,lcol)
+    let sstr = ''.escape(a:v, '*').'\>\s*[+\-*/]*'.fstr
+    let pos = searchpos(sstr,'bW')
+    while pos != [0,0] && s:IsInComment(pos)
+        let pos = searchpos(sstr,'bW')
+    endwhile
+    if pos != [0,0]
+        let [lnum, col] = pos
+        let str = matchstr(getline(lnum),fstr,col)
         let str = substitute(str,'^=\s*','','')
 
         call setpos('.',pos)
@@ -175,7 +203,7 @@ function! s:GetRubyVarType(v)
         end
         return ''
     endif
-    call setpos('.',pos)
+    call setpos('.',curpos)
     return ''
 endfunction
 
@@ -197,7 +225,7 @@ function! rubycomplete#Complete(findstart, base)
             if c =~ '\w'
                 continue
             elseif ! c =~ '\.'
-                idx = -1
+                let idx = -1
                 break
             else
                 break
@@ -254,15 +282,49 @@ class VimRubyCompletion
 
 # {{{ buffer analysis magic
   def load_requires
+
+    custom_paths = VIM::evaluate("get(g:, 'rubycomplete_load_paths', [])")
+
+    if !custom_paths.empty?
+      $LOAD_PATH.concat(custom_paths).uniq!
+    end
+
     buf = VIM::Buffer.current
     enum = buf.line_number
     nums = Range.new( 1, enum )
     nums.each do |x|
+
       ln = buf[x]
       begin
-        eval( "require %s" % $1 ) if /.*require\s*(.*)$/.match( ln )
-      rescue Exception
-        #ignore?
+        if /.*require_relative\s*(.*)$/.match( ln )
+          eval( "require %s" % File.expand_path($1) )
+        elsif /.*require\s*(["'].*?["'])/.match( ln )
+          eval( "require %s" % $1 )
+        end
+      rescue Exception => e
+        dprint e.inspect
+      end
+    end
+  end
+
+  def load_gems
+    fpath = VIM::evaluate("get(g:, 'rubycomplete_gemfile_path', 'Gemfile')")
+    return unless File.file?(fpath) && File.readable?(fpath)
+    want_bundler = VIM::evaluate("get(g:, 'rubycomplete_use_bundler')")
+    parse_file = !want_bundler
+    begin
+      require 'bundler'
+      Bundler.setup
+      Bundler.require
+    rescue Exception
+      parse_file = true
+    end
+    if parse_file
+      File.new(fpath).each_line do |line|
+        begin
+          require $1 if /\s*gem\s*['"]([^'"]+)/.match(line)
+        rescue Exception
+        end
       end
     end
   end
@@ -275,7 +337,7 @@ class VimRubyCompletion
     pare = /^\s*class\s*(.*)\s*<\s*(.*)\s*\n/.match( classdef )
     load_buffer_class( $2 ) if pare != nil  && $2 != name # load parent class if needed
 
-    mixre = /.*\n\s*include\s*(.*)\s*\n/.match( classdef )
+    mixre = /.*\n\s*(include|prepend)\s*(.*)\s*\n/.match( classdef )
     load_buffer_module( $2 ) if mixre != nil && $2 != name # load mixins if needed
 
     begin
@@ -323,8 +385,13 @@ class VimRubyCompletion
         if x != cur_line
           next if x == 0
           ln = buf[x]
-          if /^\s*(module|class|def|include)\s+/.match(ln)
-            clscnt += 1 if $1 == "class"
+          is_const = false
+          if /^\s*(module|class|def|include)\s+/.match(ln) || is_const = /^\s*?[A-Z]([A-z]|[1-9])*\s*?[|]{0,2}=\s*?.+\s*?/.match(ln)
+            clscnt += 1 if /class|module/.match($1)
+            # We must make sure to load each constant only once to avoid errors
+            if is_const
+                ln.gsub!(/\s*?[|]{0,2}=\s*?/, '||=')
+            end
             #dprint "\$1$1
             classdef += "%s\n" % ln
             classdef += "end\n" if /def\s+/.match(ln)
@@ -402,7 +469,6 @@ class VimRubyCompletion
     return get_buffer_entity_list( "class" )
   end
 
-
   def load_rails
     allow_rails = VIM::evaluate("exists('g:rubycomplete_rails') && g:rubycomplete_rails")
     return if allow_rails.to_i.zero?
@@ -434,13 +500,8 @@ class VimRubyCompletion
     return if rails_base == nil
     $:.push rails_base unless $:.index( rails_base )
 
-    rails_config = rails_base + "config/"
-    rails_lib = rails_base + "lib/"
-    $:.push rails_config unless $:.index( rails_config )
-    $:.push rails_lib unless $:.index( rails_lib )
-
-    bootfile = rails_config + "boot.rb"
-    envfile = rails_config + "environment.rb"
+    bootfile = rails_base + "config/boot.rb"
+    envfile = rails_base + "config/environment.rb"
     if File.exists?( bootfile ) && File.exists?( envfile )
       begin
         require bootfile
@@ -508,7 +569,6 @@ class VimRubyCompletion
         ret += ActiveRecord::ConnectionAdapters::SchemaStatements.methods
     end
 
-
     return ret
   end
 
@@ -566,11 +626,13 @@ class VimRubyCompletion
 # {{{ main completion code
   def self.preload_rails
     a = VimRubyCompletion.new
-    require 'Thread'
-    Thread.new(a) do |b|
-      begin
-      b.load_rails
-      rescue
+    if VIM::evaluate("has('nvim')") == 0
+      require 'thread'
+      Thread.new(a) do |b|
+        begin
+        b.load_rails
+        rescue
+        end
       end
     end
     a.load_rails
@@ -588,6 +650,9 @@ class VimRubyCompletion
       load_requires
       load_rails
     end
+
+    want_gems = VIM::evaluate("get(g:, 'rubycomplete_load_gemfile')")
+    load_gems unless want_gems.to_i.zero?
 
     input = VIM::Buffer.current.line
     cpos = VIM::Window.current.cursor[1] - 1
@@ -630,25 +695,25 @@ class VimRubyCompletion
           methods.delete_if { |c| c.match( /'/ ) }
         end
 
-      when /^::([A-Z][^:\.\(]*)$/ # Absolute Constant or class methods
+      when /^::([A-Z][^:\.\(]*)?$/ # Absolute Constant or class methods
         dprint "const or cls"
         receiver = $1
-        methods = Object.constants
-        methods.grep(/^#{receiver}/).collect{|e| "::" + e}
+        methods = Object.constants.collect{ |c| c.to_s }.grep(/^#{receiver}/)
 
       when /^(((::)?[A-Z][^:.\(]*)+?)::?([^:.]*)$/ # Constant or class methods
         receiver = $1
         message = Regexp.quote($4)
         dprint "const or cls 2 [recv: \'%s\', msg: \'%s\']" % [ receiver, message ]
         load_buffer_class( receiver )
+        load_buffer_module( receiver )
         begin
-          classes = eval("#{receiver}.constants")
-          #methods = eval("#{receiver}.methods")
+          constants = eval("#{receiver}.constants").collect{ |c| c.to_s }.grep(/^#{message}/)
+          methods = eval("#{receiver}.methods").collect{ |m| m.to_s }.grep(/^#{message}/)
         rescue Exception
           dprint "exception: %s" % $!
+          constants = []
           methods = []
         end
-        methods.grep(/^#{message}/).collect{|e| receiver + "::" + e}
 
       when /^(:[^:.]+)\.([^.]*)$/ # Symbol
         dprint "symbol"
@@ -679,7 +744,9 @@ class VimRubyCompletion
         cv = eval("self.class.constants")
         vartype = get_var_type( receiver )
         dprint "vartype: %s" % vartype
-        if vartype != ''
+
+        invalid_vartype = ['', "gets"]
+        if !invalid_vartype.include?(vartype)
           load_buffer_class( vartype )
 
           begin
@@ -707,7 +774,7 @@ class VimRubyCompletion
             methods.concat m.instance_methods(false)
           }
         end
-        variables += add_rails_columns( "#{vartype}" ) if vartype && vartype.length > 0
+        variables += add_rails_columns( "#{vartype}" ) if vartype && !invalid_vartype.include?(vartype)
 
       when /^\(?\s*[A-Za-z0-9:^@.%\/+*\(\)]+\.\.\.?[A-Za-z0-9:^@.%\/+*\(\)]+\s*\)?\.([^.]*)/
         message = $1
@@ -759,7 +826,6 @@ class VimRubyCompletion
       methods += Kernel.public_methods
     end
 
-
     include_object = VIM::evaluate("exists('g:rubycomplete_include_object') && g:rubycomplete_include_object")
     methods = clean_sel( methods, message )
     methods = (methods-Object.instance_methods) if include_object == "0"
@@ -802,6 +868,4 @@ let s:rubycomplete_rails_loaded = 0
 call s:DefRuby()
 "}}} ruby-side code
 
-
 " vim:tw=78:sw=4:ts=8:et:fdm=marker:ft=vim:norl:
-
