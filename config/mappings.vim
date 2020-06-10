@@ -9,17 +9,14 @@ map <S-F2> :MRU <CR>
 map <F3> :Vex <CR>3i
 
 " Execute tests
-" I use / instead of ? because I need to search next in normal order.
-map <F4> <ESC>/scenario\\|it \\|def test_<CR>N:call ExecuteTest()<CR>
-" -Run actual scenario TODO: do generic for other test plugins
-map <S-F4> <ESC>:call ExecuteTest()<CR>
+map <F4> <ESC>:TestNearest<CR>
+map <S-F4> <ESC>:TestFile<CR>
 
 " Create a gist with the selection
 map <F5> <ESC>:'<,'>Gist -p<CR>
 map <S-F5> <ESC>:Gist -p<CR>
 
 " Execute files with Ruby 1.9
-" map <F6> <ESC>Orequire 'pry'; binding.pry<ESC>j:w<CR>
 map <F6> <ESC>Odeb--<ESC>j:w<CR>
 map <S-F6> <ESC>Olog--<ESC>j:w<CR>
 
@@ -36,7 +33,6 @@ map <F9> <ESC>*
 " Toggle search highlight
 map <F10> :set hlsearch!<CR>
 imap <F10> <ESC>:set hlsearch!<CR>a
-
 map <S-F10> :call HighlightOverlength() <CR>
 
 " Handle trailing whitespaces and tabs.
@@ -53,12 +49,6 @@ nmap <Leader>enc :set paste<CR>ggi# encoding: UTF-8<CR><CR><ESC>:set nopaste<CR>
 "map gf :tabe! <cfile><CR>
 "map gF :w! /tmp/spec.results<CR><C-W>gF<CR>
 
-" added by eMancu
-map <A-Left> :tabp <CR>
-map <A-Right> :tabn <CR>
-
-" eMancu
-
 " Go to mark at the colum where the mark was set
 map ' `
 
@@ -71,6 +61,9 @@ imap <C-E> <ESC>$a
 " Move between tabs
 map <C-H> :tabp<CR>
 map <C-L> :tabn<CR>
+map <A-Left> :tabp <CR>
+map <A-Right> :tabn <CR>
+
 
 " Deactivate middle click
 map <MiddleMouse> <Nop>
