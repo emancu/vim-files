@@ -1,0 +1,9 @@
+[submodule "pack/plugins/start/tagbar"]
+	path = pack/plugins/start/tagbar
+	url = https://github.com/majutsushi/tagbar.git
+[submodule "pack/plugins/start/vim-go"]
+	path = pack/plugins/start/vim-go
+	url = https://github.com/fatih/vim-go.git
+[submodule "pack/plugins/start/vim-indent-guides"]
+	path = pack/plugins/start/vim-indent-guides
+	url = https://github.com/nathanaelkane/vim-indent-guides.git
