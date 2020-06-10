@@ -93,3 +93,4 @@ source ~/.vim/config/mappings.vim
 source ~/.vim/config/ctrlp.vim
 source ~/.vim/config/to-github.vim
 source ~/.vim/config/git-gutter.vim
+source ~/.vim/config/tagbar.vim
