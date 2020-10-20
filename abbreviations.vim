@@ -8,3 +8,5 @@
 :cabbr qs cd ~/carwow/quotes_site
 :cabbr rs cd ~/carwow/research_site
 :cabbr fs cd ~/carwow/flatmin
+:cabbr ts cd ~/carwow/carwow-terraform
+:cabbr pf cd ~/carwow/performance_stats_service

@@ -26,7 +26,7 @@ map <S-F6> <ESC>Olog--<ESC>j:w<CR>
 
 " Auto indent
 "map <F8> ggVG=''
-map <F8> :!ruby $HOME/.vim/ruby/rbeautify.rb %<CR>:e!<CR>
+map <F8> :!bundle exec rubocop -a %<CR>:e!<CR>
 
 " Select word and find next occurrence
 map <F9> <ESC>*
@@ -38,6 +38,7 @@ map <S-F10> :call HighlightOverlength() <CR>
 
 " Handle trailing whitespaces and tabs.
 map <F11> <ESC>:%s/\s*$//g<CR>:%s/\t/  /<CR>
+map <S-F11> :IndentGuidesToggle<CR>
 
 " Start and stop the webserver
 map <Leader>start <ESC>:!thin start -R config.ru -d<CR>
