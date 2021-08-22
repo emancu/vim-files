@@ -10,3 +10,5 @@
 :cabbr fs cd ~/carwow/flatmin
 :cabbr ts cd ~/carwow/carwow-terraform
 :cabbr pf cd ~/carwow/performance_stats_service
+:cabbr car cd ~/carwow/car-data-app
+:cabbr dl cd ~/carwow/deals_service
